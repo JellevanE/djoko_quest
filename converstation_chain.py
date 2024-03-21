@@ -1,16 +1,20 @@
 import dotenv
+from colored import cprint
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.memory import ChatMessageHistory
+from langchain.memory import ChatMessageHistory, ConversationBufferMemory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 from characters import Character, Wizard
 
+#load api key
 dotenv.load_dotenv()
 
+
 def create_llm(max_tokens=None):
-    """initiates an OpenAI chat completions llm"""
+    """Initiates an OpenAI chat completions llm"""
     return ChatOpenAI(model= "gpt-3.5-turbo-0125", temperature=0.7, max_tokens=max_tokens)
+
 
 def create_chat_prompt(character:Character):
     """Creates a system prompt for a specific character"""
@@ -28,6 +32,7 @@ def create_chat_prompt(character:Character):
         ]
     )
 
+
 def create_chat_chain(character:Character):
     """Initiates a chat chain with conversation memory"""
     llm = create_llm()
@@ -38,17 +43,34 @@ def create_chat_chain(character:Character):
         chain,
         lambda session_id: chat_history,
         input_messages_key="input",
+        output_messages_key="output",
         history_messages_key="chat_history"
         )
 
 
-
-def character_conversation(character:Character):
+def character_conversation(character:Character, user_name):
+    """Starts a conversation with a character using the chat chain"""
+    #create the chain
     chat_chain = create_chat_chain(character=character)
-    user_input = input()
-    response = chat_chain.invoke(
-            {"input": f"{user_input}"},
-            {"configurable": {"session_id": "unused"}})
-    return print(response.content)
 
-character_conversation(Wizard)
+    #print initial message 
+    cprint(character.text_color + f"???: {character.start_message} \n")
+    user_input = ""
+
+    #start conversation loop
+    while user_input != character.clear_stage_key:
+        if character.clear_stage_key in user_input.lower():
+            break
+        else:
+            input(f"{user_name}: ")
+            print('\n')
+            response = chat_chain.invoke(
+                {"input": f"{user_input}"},
+                {"configurable": {"session_id": "unused"}})
+            cprint(character.text_color + f"{character.name}: {response.content} \n")
+    return print("You are granted access")
+
+
+
+
+character_conversation(Wizard, "Djoko")

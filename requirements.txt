@@ -1,3 +1,4 @@
+colored
 langchain-openai
 langchain
 langchainhub
