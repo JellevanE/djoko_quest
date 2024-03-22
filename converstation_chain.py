@@ -1,11 +1,10 @@
 import dotenv
-from colored import cprint
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.memory import ChatMessageHistory, ConversationBufferMemory
+from langchain.memory import ChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-from characters import Character, Wizard
+from characters import Character
 
 #load api key
 dotenv.load_dotenv()
@@ -46,31 +45,3 @@ def create_chat_chain(character:Character):
         output_messages_key="output",
         history_messages_key="chat_history"
         )
-
-
-def character_conversation(character:Character, user_name):
-    """Starts a conversation with a character using the chat chain"""
-    #create the chain
-    chat_chain = create_chat_chain(character=character)
-
-    #print initial message 
-    cprint(character.text_color + f"???: {character.start_message} \n")
-    user_input = ""
-
-    #start conversation loop
-    while user_input != character.clear_stage_key:
-        if character.clear_stage_key in user_input.lower():
-            break
-        else:
-            input(f"{user_name}: ")
-            print('\n')
-            response = chat_chain.invoke(
-                {"input": f"{user_input}"},
-                {"configurable": {"session_id": "unused"}})
-            cprint(character.text_color + f"{character.name}: {response.content} \n")
-    return print("You are granted access")
-
-
-
-
-character_conversation(Wizard, "Djoko")
