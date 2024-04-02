@@ -1,5 +1,5 @@
 import pprint
-from src.utils import slowPrint
+from src.utils import fancy_print
 
 class Player:
     def __init__(self, name, starting_location):
@@ -20,7 +20,7 @@ class Player:
 
 
 def create_character():
-    slowPrint("What is your name?")
+    fancy_print("What is your name?")
     name = input("Name: ")
     player = Player(name=name, starting_location="stage 1")
 
@@ -43,11 +43,5 @@ def create_character():
 
     player.check_inventory()
 
-    return player.name
-
-
-the_hero = create_character()
-
-
-
+    return player
 

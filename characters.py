@@ -13,8 +13,9 @@ from src.utils import fancy_print
 
 
 class Character:
-    def __init__(self, name:str, system_prompt:str, start_message:str, clear_stage_key:str, text_color, text_speed:float, next_stage) -> None:
+    def __init__(self, name:str, description:str, system_prompt:str, start_message:str, clear_stage_key:str, text_color, text_speed:float, next_stage) -> None:
         self.name = name
+        self.description = description
         self.system_prompt = system_prompt
         self.start_message = start_message
         self.clear_stage_key = clear_stage_key
@@ -47,6 +48,10 @@ class Character:
     
     def fight(self):
         return True
+    
+    def inspect(self):
+        print(f"You look at {self.name} more closely...")
+        return fancy_print(self.description)
 
 #setting up LLM responses for talk method
 
