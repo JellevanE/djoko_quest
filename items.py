@@ -1,6 +1,5 @@
 from src.utils import fancy_print
-from characters import Character
-from player import Player
+from characters import Character, Player
 
 
 class Item:

@@ -1,6 +1,4 @@
-import pprint
 from src.utils import fancy_print
-from src.healthbar import Healthbar
 from characters import Player
 
 

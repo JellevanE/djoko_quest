@@ -2,10 +2,11 @@ from colored import fg
 import colorama
 from colorama import init, Fore, Back, Style
 colorama.init(autoreset=True)
-from characters import Character, NPC, Player
+from characters import NPC, Player
 from stages import testing_stage
 from items import Item
 from player import create_character
+from fight import fight_character
 
 
 wizard = NPC(
@@ -18,7 +19,7 @@ wizard = NPC(
     text_color= "RED",
     text_speed=0.04,
     max_hp = 5,
-    damage = 1
+    damage = 8
 )
 
 
@@ -37,26 +38,6 @@ old_wand = Item(
     solve_puzzle=testing_stage
     )
 
-player = create_character()
+player = Player(name=input(), starting_location="stage 1")
 
-# old_wand.pick_up(player=player)
-
-# player.check_inventory()
-
-# old_wand.use(player=player, object=wizard)
-
-def fight_character(player:Player, character:NPC):
-    while player.hp and character.hp != 0:
-
-        player.health_bar.draw()
-        character.health_bar.draw()
-
-        player.attack(character)
-        character.attack(player)
-
-
-
-        print("\n")
-    return print("the battle is done")
-
-fight_character(player=player, character=wizard)
+fight_character(player=player, character=wizard, victory_option="you won")
