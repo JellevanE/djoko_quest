@@ -1,22 +1,7 @@
 import pprint
 from src.utils import fancy_print
-
-class Player:
-    def __init__(self, name, starting_location):
-        self.name = name
-        self.current_location = starting_location
-        self.inventory = []
-
-    def move_to(self, new_location):
-        self.current_location = new_location
-        print(f"{self.name} has moved to {new_location}.")
-
-    def add_to_inventory(self, item):
-        self.inventory.append(item)
-        print(f"{item} has been added to your inventory.")
-
-    def check_inventory(self):
-        pprint.pprint(f"Your inventory contains: {self.inventory}")
+from src.healthbar import Healthbar
+from characters import Player
 
 
 def create_character():

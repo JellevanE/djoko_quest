@@ -1,4 +1,5 @@
 import dotenv
+import pprint
 from colored import fg, cprint
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -7,14 +8,49 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 
 from stages import testing_stage
 from src.utils import fancy_print
+from src.healthbar import Healthbar
 
 
 # Defining the character object and it's methods
 
-
 class Character:
-    def __init__(self, name:str, description:str, system_prompt:str, start_message:str, clear_stage_key:str, text_color, text_speed:float, next_stage) -> None:
+    def __init__(self, name:str, hp:int, damage:int) -> None:
         self.name = name
+        self.hp = hp
+        self.max_hp = hp
+        self.damage = damage
+        pass
+
+    def attack(self, target):
+        target.hp -= self.damage
+        target.hp = max(target.hp, 0)
+        target.health_bar.update()
+        fancy_print(f"{self.name} dealt {self.damage} damage to {target.name}")
+
+
+class Player(Character):
+    def __init__(self, name:str, starting_location, max_hp=10):
+        super().__init__(name=name, hp=max_hp, damage=2)
+        self.current_location = starting_location
+        self.inventory = []
+        self.health_bar = Healthbar(self, color="green")
+
+    def move_to(self, new_location):
+        self.current_location = new_location
+        print(f"{self.name} has moved to {new_location}.")
+
+    def add_to_inventory(self, item:str):
+        self.inventory.append(item)
+        print(f"{item} has been added to your inventory.")
+
+    def check_inventory(self):
+        pprint.pprint(f"Your inventory contains: {self.inventory}")
+
+
+
+class NPC(Character):
+    def __init__(self, name:str, max_hp:int, damage:int, description:str, system_prompt:str, start_message:str, clear_stage_key:str, text_color, text_speed:float, next_stage) -> None:
+        super().__init__(name=name, hp=max_hp, damage=damage)
         self.description = description
         self.system_prompt = system_prompt
         self.start_message = start_message
@@ -22,6 +58,7 @@ class Character:
         self.next_stage = next_stage
         self.text_color = text_color
         self.text_speed = text_speed
+        self.health_bar = Healthbar(self, color="red")
         pass
 
     def __str__(self) -> str:
@@ -45,9 +82,6 @@ class Character:
             fancy_print(text=f"\t{self.name}: {response.content}", speed=self.text_speed, color=self.text_color)
 
         return self.next_stage()
-    
-    def fight(self):
-        return True
     
     def inspect(self):
         print(f"You look at {self.name} more closely...")
@@ -94,11 +128,3 @@ def create_chat_chain(character:Character):
         output_messages_key="output",
         history_messages_key="chat_history"
         )
-
-
-
-
-
-
-
-
