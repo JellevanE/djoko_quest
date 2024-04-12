@@ -38,6 +38,8 @@ class Item:
     def use(self, player:Player, object):
         if self.can_use(player, object) == True:
             return self.solve_puzzle()
+        else:
+            return None
 
 
     def inspect(self):

@@ -3,11 +3,12 @@ import colorama
 from colorama import init, Fore, Back, Style
 colorama.init(autoreset=True)
 from characters import NPC, Player
-from stages import testing_stage
 from items import Item
 from create_player import create_player
-from fight import fight_character
+from src.fight import fight_character
 
+def testing_stage():
+    return print("you are granted access and can enter the next stage!")
 
 wizard = NPC(
     name="Selma the Witch",
@@ -38,6 +39,7 @@ old_wand = Item(
     solve_puzzle=testing_stage
     )
 
-player = Player(name=input(), starting_location="stage 1")
 
-fight_character(player=player, character=wizard, victory_option="you won")
+# player = Player(name=input(), starting_location="stage 1")
+
+# fight_character(player=player, character=wizard, victory_option="you won")

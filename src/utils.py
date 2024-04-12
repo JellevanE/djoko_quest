@@ -5,7 +5,7 @@ from colorama import init, Fore, Back, Style
 colorama.init(autoreset=True)
 
 
-def fancy_print(text, speed=0.04, color="WHITE"):
+def fancy_print(text, speed=0.02, color="WHITE"):
     """
     Print text with a specific speed and color.
 
