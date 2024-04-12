@@ -5,7 +5,7 @@ colorama.init(autoreset=True)
 from characters import NPC, Player
 from stages import testing_stage
 from items import Item
-from player import create_character
+from create_player import create_player
 from fight import fight_character
 
 

@@ -2,7 +2,7 @@ from src.utils import fancy_print
 from characters import Player
 
 
-def create_character():
+def create_player():
     fancy_print("What is your name?")
     name = input("Name: ")
     player = Player(name=name, starting_location="stage 1")

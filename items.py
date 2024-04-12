@@ -14,6 +14,7 @@ class Item:
     def __str__(self) -> str:
         return f"{self.name}"
 
+
     def pick_up(self, player:Player):
         if self.name in player.inventory:
             return print(f"{self.name} is already in your inventory.")
