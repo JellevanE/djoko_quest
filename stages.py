@@ -30,13 +30,13 @@ def player_options(player:Player, locations:list, interactions:list[NPC], object
         print("I choose: ")
         action = input()
 
-    if action.lower() == "a": #move action
+    if action.lower() == "a": #move action FIX THIS
         action = "perform move"
 
-    if action.lower() == "b": #interact action
+    if action.lower() == "b": #interact action FIX THIS
         action = "perform interact"
 
-    if action.lower() == "c": #inspect action
+    if action.lower() == "c": #inspect action FIX THIS
         action = "inspect object"
 
     if action.lower() == "d": #inventory action
@@ -89,3 +89,7 @@ def player_use_item(player:Player, use:bool, inspect:bool):
     else:
         fancy_print("Invalid number, please enter a number from the list.")
         player_use_item(player=player, use=use, inspect=inspect)
+
+
+if __name__ == '__main__':
+    print("stages")
