@@ -3,11 +3,12 @@ from src.characters import Character, Player
 
 
 class Item:
-    def __init__(self, name:str, description:str, usable_on:list, solve_puzzle):
+    def __init__(self, name:str, description:str, usable_on:list, solve_puzzle, can_take:bool):
         self.name = name
         self.description = description
         self.usable_on = usable_on
         self.solve_puzzle = solve_puzzle
+        self.can_take = can_take
         pass
 
 
@@ -18,8 +19,11 @@ class Item:
     def pick_up(self, player:Player):
         if self.name in player.inventory:
             return print(f"{self.name} is already in your inventory.")
-        else: 
-            return player.add_to_inventory(self.name)
+        else:
+            if self.can_take == True:
+                return player.add_to_inventory(self.name)
+            else:
+                return fancy_print("")
 
 
     def can_use(self, player:Player, object):

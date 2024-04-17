@@ -6,6 +6,7 @@ from src.characters import NPC, Player
 from src.items import Item
 from create_player import create_player
 from src.fight import fight_character
+from src.locations import Location
 
 def testing_stage():
     return print("you are granted access and can enter the next stage!")
@@ -35,7 +36,8 @@ wizard = NPC(
 old_wand = Item(
     name="Old Wand",
     description="It looks like a magical old branch",
-    usable_on=[],
+    can_take=True,
+    usable_on=[wizard],
     solve_puzzle=testing_stage
     )
 

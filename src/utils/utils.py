@@ -2,10 +2,11 @@ import time
 import sys
 import colorama
 from colorama import init, Fore, Back, Style
+
 colorama.init(autoreset=True)
 
 
-def fancy_print(text, speed=0.02, color="WHITE"):
+def fancy_print(text, speed=0.02, color="WHITE", bright=False, dim=False):
     """
     Print text with a specific speed and color.
 
@@ -25,11 +26,19 @@ def fancy_print(text, speed=0.02, color="WHITE"):
         "WHITE": Fore.WHITE,
     }
 
+    # Style selection
+    style = ""
+    if bright:
+        style = Style.BRIGHT
+    elif dim:
+        style = Style.DIM
+
+
     selected_color = color_map.get(color.upper(), Fore.WHITE)
     
     # Print each character with the specified delay
     for char in text:
-        print(selected_color + char, end='', flush=True)
+        print(style + selected_color + char, end='', flush=True)
         time.sleep(speed)
     
     print()  # Ensure there's a newline at the end
