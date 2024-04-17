@@ -2,8 +2,8 @@ from colored import fg
 import colorama
 from colorama import init, Fore, Back, Style
 colorama.init(autoreset=True)
-from characters import NPC, Player
-from items import Item
+from src.characters import NPC, Player
+from src.items import Item
 from create_player import create_player
 from src.fight import fight_character
 

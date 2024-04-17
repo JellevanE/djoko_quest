@@ -1,5 +1,5 @@
-from src.utils import fancy_print
-from characters import Player
+from src.utils.utils import fancy_print
+from src.characters import Player
 
 
 def create_player():

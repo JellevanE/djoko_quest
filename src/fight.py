@@ -1,6 +1,6 @@
-from characters import Player, NPC
-from src.utils import fancy_print
-from llm import generate_text
+from src.characters import Player, NPC
+from src.utils.utils import fancy_print
+from src.utils.llm import generate_text
 
 def fight_character(player:Player, character:NPC, victory_option):
     while player.hp and character.hp != 0:

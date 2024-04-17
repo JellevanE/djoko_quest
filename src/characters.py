@@ -6,8 +6,8 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.memory import ChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-from src.utils import fancy_print
-from src.healthbar import Healthbar
+from src.utils.utils import fancy_print
+from src.utils.healthbar import Healthbar
 
 
 # Defining the character object and it's methods
