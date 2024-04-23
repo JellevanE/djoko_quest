@@ -23,7 +23,7 @@ class Item:
             if self.can_take == True:
                 return player.add_to_inventory(self.name)
             else:
-                return fancy_print("")
+                return fancy_print("It doesn't look like you can take this", dim=True)
 
 
     def can_use(self, player:Player, object):

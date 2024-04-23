@@ -16,8 +16,8 @@ def enter_stage_one(player:Player):
     """Starts the first stage of the story"""
     #write opening scene
     locations = create_island_locations()
-    fancy_print(ascii_island, speed=0.01, color="YELLOW")
-    fancy_print(opening_wake_up)
+    fancy_print(ascii_island, speed=0.001, color="YELLOW")
+    fancy_print(opening_wake_up, speed=0.001)
     player_options(player=player, location=locations['campfire']) #test string
 
 

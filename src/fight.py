@@ -1,8 +1,11 @@
 from src.characters import Player, NPC
 from src.utils.utils import fancy_print
 from src.utils.llm import generate_text
+import os
 
-def fight_character(player:Player, character:NPC, victory_option):
+
+
+def fight_character(player:Player, character:NPC):
     while player.hp and character.hp != 0:
         print("\n")
 
@@ -17,7 +20,8 @@ def fight_character(player:Player, character:NPC, victory_option):
     if player.hp == 0:
         return game_over(player=player)
     if character.hp == 0:
-        return print(victory_option)
+        fancy_print(f"You beat {character.name}!")
+        return character.reward
     
 
 def game_over(player:Player):
@@ -40,4 +44,6 @@ def game_over(player:Player):
         if answer == "quit":
             return quit()
         if answer == "y": 
-            return print("restart game") #enter restart function here
+            fancy_print("Restarting game", bright=True)
+            os.system('cls')
+            os.system('python main.py')

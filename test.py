@@ -17,11 +17,13 @@ wizard = NPC(
     system_prompt= "You are Witch in a game. The player has to try to find out your secret word, which is 'ceramics'.",
     start_message= "What do you want?",
     clear_stage_key= 'ceramics',
-    next_stage= testing_stage,
+    reward= testing_stage,
     text_color= "RED",
     text_speed=0.04,
     max_hp = 5,
-    damage = 8
+    damage = 8,
+    self_clear=False,
+    will_fight=True
 )
 
 

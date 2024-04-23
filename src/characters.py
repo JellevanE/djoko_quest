@@ -1,3 +1,4 @@
+from __future__ import annotations
 import dotenv
 import pprint
 from colored import fg, cprint
@@ -20,7 +21,7 @@ class Character:
         self.damage = damage
         pass
 
-    def attack(self, target):
+    def attack(self, target:Character):
         target.hp -= self.damage
         target.hp = max(target.hp, 0)
         target.health_bar.update()
@@ -48,20 +49,23 @@ class Player(Character):
 
 
 class NPC(Character):
-    def __init__(self, name:str, max_hp:int, damage:int, description:str, system_prompt:str, start_message:str, clear_stage_key:str, text_color, text_speed:float, next_stage) -> None:
+    def __init__(self, name:str, max_hp:int, damage:int, description:str, system_prompt:str, start_message:str, clear_stage_key:str, text_color, text_speed:float, reward, self_clear:bool, will_fight:bool) -> None:
         super().__init__(name=name, hp=max_hp, damage=damage)
         self.description = description
         self.system_prompt = system_prompt
         self.start_message = start_message
         self.clear_stage_key = clear_stage_key
-        self.next_stage = next_stage
+        self.reward = reward
+        self.self_clear = self_clear
         self.text_color = text_color
         self.text_speed = text_speed
+        self.will_fight = will_fight
         self.health_bar = Healthbar(self, color="red")
         pass
 
     def __str__(self) -> str:
         return f"{self.name} Character"
+    
     
     def talk(self, user_name):
         """Starts a conversation with a character using the chat chain"""
@@ -69,18 +73,31 @@ class NPC(Character):
         chat_chain = create_chat_chain(character=self)
 
         #print initial message
+        fancy_print("Hint: if you want to exit the conversation and return to the player options, type 'stop'.", dim=True)
+        print()
         fancy_print(text=f"\t{self.name}: {self.start_message}", color=self.text_color, speed=self.text_speed) 
         user_input = ""
+        response = ""
+        clear_stage_input = ""
 
         #start conversation loop
-        while self.clear_stage_key not in user_input.lower():
+        while self.clear_stage_key not in clear_stage_input:
             user_input = input(f"\t{user_name}: ")
-            response = chat_chain.invoke(
+            if user_input == 'stop':
+                return False #let user stop conversation
+            
+            response = chat_chain.invoke( #llm response
                 {"input": f"{user_input}"},
-                {"configurable": {"session_id": "unused"}})
-            fancy_print(text=f"\t{self.name}: {response.content}", speed=self.text_speed, color=self.text_color)
+                {"configurable": {"session_id": "unused"}}).content
+            fancy_print(text=f"\t{self.name}: {response}", speed=self.text_speed, color=self.text_color)
 
-        return self.next_stage()
+            #check for clear stage key
+            if self.self_clear == False:
+                clear_stage_input = user_input.lower()
+            if self.self_clear == True:
+                clear_stage_input = response.lower()
+
+        return self.reward()
     
     def inspect(self):
         print(f"You look at {self.name} more closely...")
