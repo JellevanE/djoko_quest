@@ -1,6 +1,6 @@
 from src.locations import Location
 from src.characters import Player, NPC
-from src.items import Item
+from src.items import Item, Weapon, UsableItem
 from src.utils.utils import fancy_print, get_valid_input
 from src.fight import fight_character
 
@@ -172,7 +172,7 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
 
         return interact_with_npc(player=player, location=location, npc=npc)
     
-    if npc_action.lower() == "d":
+    if npc_action.lower() == "d": #inventory action
         return player_options(player=player, location=location)
 
     return player_options(player=player, location=location)
@@ -250,7 +250,14 @@ def player_inspect_object(player:Player, location:Location):
     
 def inventory_action(player:Player, location:Location):
     """default action to access the player inventory"""
-    player.check_inventory() #print items in inventory
+    fancy_print("Your inventory contains: ")
+    items = player.inventory
+
+    for i, item in enumerate(items, start=1):
+        fancy_print(f"{i}: {item.name}")
+
+    print()
+
     fancy_print("What do you do?")
     fancy_print("""
           a: use
@@ -265,16 +272,16 @@ def inventory_action(player:Player, location:Location):
         print("I choose: ")
         inventory_action = input()
     if inventory_action.lower() == "a":
-        player_use_item(player=player, use=True, inspect=False)
+        player_use_item(player=player, location=location, use=True, inspect=False)
 
     if inventory_action.lower() == "b":
-        player_use_item(player=player, use=False, inspect=True)
+        player_use_item(player=player, location=location, use=False, inspect=True)
 
     if inventory_action.lower() == "c":
         return player_options(player=player, location=location)
     
 
-def player_use_item(player:Player, use:bool, inspect:bool): ### NEEDS FIXING
+def player_use_item(player:Player, location:Location, use:bool, inspect:bool): ### NEEDS FIXING
     """uses or inspects a selected item in the player inventory"""
     items = player.inventory
 
@@ -296,9 +303,49 @@ def player_use_item(player:Player, use:bool, inspect:bool): ### NEEDS FIXING
     if 0 <= selected_index < len(items):
         selected_item = items[selected_index]
         if use == True:
-            return selected_item.use
+            return use_item_on(player=player, location=location, item=selected_item)
         if inspect == True:
-            return selected_item.inspect
+            selected_item.inspect()
+            return inventory_action(player=player,location=location)
     else:
         fancy_print("Invalid number, please enter a number from the list.")
         player_use_item(player=player, use=use, inspect=inspect)
+
+def use_item_on(player:Player, location:Location, item:Item):
+    if isinstance(item, Weapon):
+        return item.use(player=player)
+    
+    if isinstance(item, UsableItem):
+        fancy_print(f"What do you want to use {item.name} on?")
+
+        object_list = location.interactions + location.objects
+        
+        for i, item in enumerate(object_list, start=1):
+            fancy_print(f"{i}: {item}")
+
+        # Adding an option to go back to the previous menu
+        fancy_print(f"{len(object_list) + 1}: Go back to previous options")
+    
+        print()
+        selected_number = get_valid_input(f"{player.name}: ", len(object_list) + 1)
+        print()
+
+        # Adjust for zero-based index
+        selected_index = selected_number - 1
+
+        if selected_number == len(object_list) + 1:
+            fancy_print("Returning to previous options...")
+            fancy_print(f"You are still at {location.name}")
+            print()
+            fancy_print(f"{location.description}")
+            print()
+            return player_options(player=player, location=location)
+    
+        # Validating if the input is within the available item range
+        if 0 <= selected_index < len(object_list):
+
+            selected_object = object_list[selected_index]
+            item.use(player=player, object=selected_object)
+        
+            print()
+            return player_options(player=player, location=location)

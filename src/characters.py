@@ -39,7 +39,7 @@ class Player(Character):
         self.current_location = new_location
         print(f"{self.name} has moved to {new_location}.")
 
-    def add_to_inventory(self, item:str):
+    def add_to_inventory(self, item):
         self.inventory.append(item)
         print(f"{item} has been added to your inventory.")
 

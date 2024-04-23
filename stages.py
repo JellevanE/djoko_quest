@@ -6,7 +6,7 @@ from src.characters import Player, NPC
 from src.items import Item
 from src.utils.utils import fancy_print
 from scenes_text.island_campfire import opening_wake_up, ascii_island
-from test import wizard, old_wand
+from test import wizard, old_wand, rusty_key
 from create_player import create_player
 from src.player_options import player_options
 
@@ -44,7 +44,7 @@ def create_island_locations():
         name="the fortress entrance",
         description="add description here",
         interactions=[],
-        objects=[]
+        objects=[rusty_key]
     )
 
     island_fortress_hallway = Location(

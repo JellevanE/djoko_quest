@@ -4,4 +4,3 @@ langchain
 langchainhub
 python-dotenv
 python-box
-sys

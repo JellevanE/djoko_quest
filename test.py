@@ -3,7 +3,7 @@ import colorama
 from colorama import init, Fore, Back, Style
 colorama.init(autoreset=True)
 from src.characters import NPC, Player
-from src.items import Item
+from src.items import Item, Weapon, UsableItem
 from create_player import create_player
 from src.fight import fight_character
 from src.locations import Location
@@ -35,14 +35,22 @@ wizard = NPC(
 
 
 
-old_wand = Item(
+old_wand = Weapon(
     name="Old Wand",
     description="It looks like a magical old branch",
     can_take=True,
     usable_on=[wizard],
-    solve_puzzle=testing_stage
+    solve_puzzle=testing_stage,
+    damage= 10
     )
 
+rusty_key = UsableItem(
+    name="Rusty Key",
+    description="It's a very old key covered in rust. It's big, so it will probably fit a big lock.",
+    can_take=True,
+    usable_on=[old_wand],
+    solve_puzzle=testing_stage
+)
 
 # player = Player(name=input(), starting_location="stage 1")
 
