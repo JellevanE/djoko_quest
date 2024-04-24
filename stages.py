@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import TypedDict
 
 from src.locations import Location
 from src.characters import Player, NPC
@@ -7,8 +6,8 @@ from src.items import Item
 from src.utils.utils import fancy_print
 from scenes_text.island_campfire import opening_wake_up, ascii_island
 from test import wizard, old_wand, rusty_key
-from create_player import create_player
 from src.player_options import player_options
+from src.stage_1_objects import bottle_of_rum, skipper, cook
 
 
 
@@ -36,7 +35,7 @@ def create_island_locations():
     island_docks = Location(
         name="the docks",
         description="There are a number of big ships in the harbour. Their main masts reach high into the sky. A boat on your left is called 'Bird', you wonder which bird is meant. At the end of the docks you see a lone figure preparing a skiff for sea.",
-        interactions=[],
+        interactions=[skipper],
         objects=[]
     )
 
@@ -64,7 +63,7 @@ def create_island_locations():
     island_fortress_kitchens = Location(
         name="the fortress kitchens",
         description="add description here",
-        interactions=[],
+        interactions=[cook],
         objects=[]
     )
 

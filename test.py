@@ -7,9 +7,10 @@ from src.items import Item, Weapon, UsableItem
 from create_player import create_player
 from src.fight import fight_character
 from src.locations import Location
+from src.stage_1_objects import cook, skipper, bottle_of_rum
 
-def testing_stage():
-    return print("you are granted access and can enter the next stage!")
+def testing_stage(player:Player):
+    return print(f"you are granted access and can enter the next stage, {player.name}!")
 
 wizard = NPC(
     name="Selma the Witch",
@@ -52,6 +53,8 @@ rusty_key = UsableItem(
     solve_puzzle=testing_stage
 )
 
-# player = Player(name=input(), starting_location="stage 1")
+player = Player(name=input(), starting_location="stage 1")
 
-# fight_character(player=player, character=wizard, victory_option="you won")
+fight_character(player=player, character=cook)
+
+cook.talk(player=player)

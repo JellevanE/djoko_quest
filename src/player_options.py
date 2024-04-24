@@ -13,7 +13,7 @@ def player_options(player:Player, location = Location):
           b: interact
           c: inspect
           d: inventory
-          """)
+          """, speed=0.01)
     print("I choose: ")
     action = input()
     print()
@@ -39,7 +39,7 @@ def player_move_to_location(player:Player, location:Location):
     """default action to move to a new location"""
     accessible_locations = location.accessible_locations
 
-    fancy_print(f"You decide to leave {location.name} \n", speed=0.05, dim=True)
+    fancy_print(f"You decide to leave {location.name} \n", speed=0.04, dim=True)
     print()
 
     if len(accessible_locations) == 0:
@@ -136,7 +136,7 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
           b: fight
           c: inspect
           d: return to options
-          """)
+          """, speed=0.01)
     print("I choose: ")
     npc_action = input()
     
@@ -147,11 +147,15 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
 
     if npc_action.lower() == "a": #talk to character
         print()
-        result = npc.talk(user_name=player.name)
+        result = npc.talk(player=player)
+        if isinstance(result, Item):
+            result.pick_up(player=player)
 
         if result == False:
             return interact_with_npc(player=player, location=location, npc=npc)
         
+        if hasattr(result, '__call__'):
+            result(player)
         else:
             return npc.reward
 
@@ -263,7 +267,7 @@ def inventory_action(player:Player, location:Location):
           a: use
           b: inspect
           c: return to options
-          """)
+          """, speed=0.01)
     print("I choose: ")
     inventory_action = input()
     

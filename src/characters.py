@@ -64,11 +64,13 @@ class NPC(Character):
         pass
 
     def __str__(self) -> str:
-        return f"{self.name} Character"
+        return f"{self.name}"
     
     
-    def talk(self, user_name):
+    def talk(self, player:Player):
         """Starts a conversation with a character using the chat chain"""
+        user_name = player.name
+
         #initiate chat chain llm
         chat_chain = create_chat_chain(character=self)
 
@@ -97,7 +99,7 @@ class NPC(Character):
             if self.self_clear == True:
                 clear_stage_input = response.lower()
 
-        return self.reward()
+        return self.reward
     
     def inspect(self):
         print(f"You look at {self.name} more closely...")

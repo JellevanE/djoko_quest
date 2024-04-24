@@ -1,4 +1,5 @@
 from src.characters import Player, NPC
+from src.items import Item
 from src.utils.utils import fancy_print
 from src.utils.llm import generate_text
 import os
@@ -21,7 +22,10 @@ def fight_character(player:Player, character:NPC):
         return game_over(player=player)
     if character.hp == 0:
         fancy_print(f"You beat {character.name}!")
-        return character.reward
+        if isinstance(character.reward, Item):
+            return character.reward.pick_up(player=player)
+        else:
+            return character.reward(player)
     
 
 def game_over(player:Player):
