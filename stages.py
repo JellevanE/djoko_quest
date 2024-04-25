@@ -7,16 +7,22 @@ from src.utils.utils import fancy_print
 from scenes_text.island_campfire import opening_wake_up, ascii_island
 from test import wizard, old_wand, rusty_key
 from src.player_options import player_options
-from src.stage_1_objects import bottle_of_rum, skipper, cook
+from src.stage_1_objects import bottle_of_rum, skipper, cook, natural_wine
 
 
 
 def enter_stage_one(player:Player):
     """Starts the first stage of the story"""
-    #write opening scene
+    #set up locations for stage 1
     locations = create_island_locations()
+
+    #print opening scene text and add natural wine to inventory
     fancy_print(ascii_island, speed=0.001, color="YELLOW")
     fancy_print(opening_wake_up, speed=0.001)
+    print()
+    natural_wine.pick_up(player=player)
+
+    #start game loop and place player at campfire
     player_options(player=player, location=locations['campfire']) #test string
 
 

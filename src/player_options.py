@@ -22,6 +22,7 @@ def player_options(player:Player, location = Location):
         fancy_print("Please choose one of the options by typing the corresponding letter.")
         print("I choose: ")
         action = input()
+        print()
 
     if action.lower() == "a":
         player_move_to_location(player=player, location=location)
@@ -149,9 +150,11 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
         print()
         result = npc.talk(player=player)
         if isinstance(result, Item):
+            print()
             result.pick_up(player=player)
 
         if result == False:
+            print()
             return interact_with_npc(player=player, location=location, npc=npc)
         
         if hasattr(result, '__call__'):
@@ -270,11 +273,14 @@ def inventory_action(player:Player, location:Location):
           """, speed=0.01)
     print("I choose: ")
     inventory_action = input()
+    print()
     
     while inventory_action.lower() not in ["a", "b", "c"]:
         fancy_print("Please choose one of the options by typing the corresponding letter.")
         print("I choose: ")
         inventory_action = input()
+        print()
+
     if inventory_action.lower() == "a":
         player_use_item(player=player, location=location, use=True, inspect=False)
 
@@ -285,23 +291,37 @@ def inventory_action(player:Player, location:Location):
         return player_options(player=player, location=location)
     
 
-def player_use_item(player:Player, location:Location, use:bool, inspect:bool): ### NEEDS FIXING
+def player_use_item(player:Player, location:Location, use:bool, inspect:bool):
     """uses or inspects a selected item in the player inventory"""
+    fancy_print("Options: ")
     items = player.inventory
 
     for i, item in enumerate(items, start=1):
         fancy_print(f"{i}: {item}")
 
+
+    fancy_print(f"{len(items) + 1}: Go back to previous options")
+    
     print()
 
     # Ask the user to choose a number
     if use == True:
-        selected_number = int(input("Enter the number of the item you want to use: "))
+        selected_number = get_valid_input("Enter the number of the item you want to use: ", len(items) + 1)
     if inspect == True:
-        selected_number = int(input("Enter the number of the item you want to inspect: "))
+        selected_number = get_valid_input("Enter the number of the item you want to inspect: ", len(items) + 1)
 
-        # Adjust for zero-based index
+    print()
+
+    # Adjust for zero-based index
     selected_index = selected_number - 1
+
+    if selected_number == len(items) + 1:
+        fancy_print("Returning to previous options...")
+        fancy_print(f"You are still at {location.name}")
+        print()
+        fancy_print(f"{location.description}")
+        print()
+        return player_options(player=player, location=location)
 
     # Validating if the input is within the available item range
     if 0 <= selected_index < len(items):
@@ -310,6 +330,7 @@ def player_use_item(player:Player, location:Location, use:bool, inspect:bool): #
             return use_item_on(player=player, location=location, item=selected_item)
         if inspect == True:
             selected_item.inspect()
+            print()
             return inventory_action(player=player,location=location)
     else:
         fancy_print("Invalid number, please enter a number from the list.")

@@ -30,6 +30,7 @@ wizard = NPC(
     will_fight=True
 )
 
+
 skipper = NPC(
     name="Marlowe the Skipper", 
     max_hp=15,
@@ -45,6 +46,7 @@ skipper = NPC(
     will_fight=True
 )
 
+
 #reward from the cook
 bottle_of_rum = UsableItem(
     name="Bottle of Rum",
@@ -54,12 +56,13 @@ bottle_of_rum = UsableItem(
     can_take=True
 )
 
+
 cook = NPC(
     name="Leonardo the Cook", 
     max_hp=7,
     damage=2,
     description="",
-    system_prompt="You are Leornardo, a character in a videogame that is a busy, italian cook. You ask the player for advice on how to finish your recipes. Once the player has helped you for 3 times. You exclaim 'Bellissima!' and reward the player with a bottle of rum.",
+    system_prompt="You are Leornardo, a character in a videogame that is a busy cook. You ask the player for advice on what ingredients to use in y your recipes. Once the player has helped you for 3 times. You exclaim 'Bellissima!' and reward the player with a bottle of rum.",
     start_message="Ciao bella, welcome to the galley.",
     clear_stage_key="bellissima!",
     text_color="GREEN",
@@ -67,6 +70,15 @@ cook = NPC(
     reward=bottle_of_rum,
     self_clear=True,
     will_fight=True
+)
+
+
+natural_wine = UsableItem(
+    name="Natural wine",
+    description="A half finished bottle of juicy natural wine. It feel lukewarm, probably because it was laying in your arms for most of the night.",
+    solve_puzzle=cook.reward,
+    usable_on=[cook],
+    can_take=True
 )
 
 if __name__ == '__main__':

@@ -53,8 +53,8 @@ rusty_key = UsableItem(
     solve_puzzle=testing_stage
 )
 
-player = Player(name=input(), starting_location="stage 1")
+# player = Player(name=input(), starting_location="stage 1")
 
-fight_character(player=player, character=cook)
+# fight_character(player=player, character=cook)
 
-cook.talk(player=player)
+# cook.talk(player=player)

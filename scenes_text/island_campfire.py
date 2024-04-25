@@ -5,7 +5,7 @@ You figure the people you drank with yesterday have left already.\n
 The sun is starting to rise and your adventure begins. Time to make plans. 
 \n \n
 To the north you can see the outline of a blocky old fortress. \n
-To the west you see several masts on the horizon signifying a harbour. \n
+To the west you see several masts on the horizon signifying a harbour.
 """
 
 

@@ -1,4 +1,5 @@
 colored
+colorama
 langchain-openai
 langchain
 langchainhub
