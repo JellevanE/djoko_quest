@@ -76,10 +76,10 @@ def player_move_to_location(player:Player, location:Location):
         selected_location = accessible_locations[selected_index]
         location = selected_location #update location
 
-        fancy_print(f"{player.name} travels to {location.name}")
+        fancy_print(f"{player.name} travels to {location.name}.")
         fancy_print(f"{location.description}")
         print()
-        return player_options(player=player, location=location) ### SHOULD BE ACCESS NEW LOCATION: MOVETO
+        return player_options(player=player, location=location)
 
     else:
         fancy_print("Invalid number, please enter a number from the list.")
@@ -187,8 +187,7 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
 
 def inspect_action(player:Player, location:Location):
     """default action to inspect object in a location"""
-    print()
-    fancy_print("You look around and inspect your surroundings more closely... \n", speed=0.06, dim=True)
+    fancy_print("You look around and inspect your surroundings more closely... \n", speed=0.04, dim=True)
     fancy_print("You spot the following things:")
 
     player_inspect_object(player=player, location=location)
@@ -234,7 +233,7 @@ def player_inspect_object(player:Player, location:Location):
         selected_item.inspect()
 
         print()
-        fancy_print(f"Do you want to take {selected_item.name}?", speed=0.1, dim=True)
+        fancy_print(f"Do you want to take {selected_item.name}?", speed=0.05, dim=True)
         take_item = ""
 
         while take_item not in ["yes", "no"]:
@@ -370,7 +369,7 @@ def use_item_on(player:Player, location:Location, item:Item):
         if 0 <= selected_index < len(object_list):
 
             selected_object = object_list[selected_index]
-            item.use(player=player, object=selected_object)
+            item.use(player=player, object=selected_object)  #### FIX THIS FUNCTION
         
             print()
             return player_options(player=player, location=location)

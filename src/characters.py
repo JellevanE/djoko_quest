@@ -43,6 +43,9 @@ class Player(Character):
         self.inventory.append(item)
         print(f"{item} has been added to your inventory.")
 
+    def remove_from_inventory(self, item):
+        self.inventory.remove(item)
+
     def check_inventory(self):
         pprint.pprint(f"Your inventory contains: {self.inventory}")
 

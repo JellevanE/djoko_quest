@@ -61,7 +61,7 @@ cook = NPC(
     name="Leonardo the Cook", 
     max_hp=7,
     damage=2,
-    description="",
+    description="This must be the chef of this kitchen. He is a short, stout, southern looking man with a large mustache and an evan larger belly. \nHe seems good natured but also really busy cooking up all kinds of dishes at the same time.",
     system_prompt="You are Leornardo, a character in a videogame that is a busy cook. You ask the player for advice on what ingredients to use in y your recipes. Once the player has helped you for 3 times. You exclaim 'Bellissima!' and reward the player with a bottle of rum.",
     start_message="Ciao bella, welcome to the galley.",
     clear_stage_key="bellissima!",
@@ -76,9 +76,46 @@ cook = NPC(
 natural_wine = UsableItem(
     name="Natural wine",
     description="A half finished bottle of juicy natural wine. It feel lukewarm, probably because it was laying in your arms for most of the night.",
+    can_take=True,
     solve_puzzle=cook.reward,
-    usable_on=[cook],
-    can_take=True
+    usable_on=[cook]
+)
+
+
+def fortress_sign_interaction():
+    fancy_print("You see a small moss covered sign hanging next to the fortress entrance, it's hard to make out what is written on it.")
+    fancy_print("Do you want to clear off the moss?")
+    player_input = ""
+    while player_input not in ["yes", "no"]:
+        player_input = input("yes/no: ")
+        if player_input.lower() == "yes":
+            return fancy_print("You scrape of several layers of moss and read the sign closely... \nYou make out the letters 'Fort aan het Pampus, sedert 1887'. You wonder what it means.")
+        if player_input.lower() == "no":
+            return False
+        fancy_print("Invalid answer, please enter 'yes' or 'no'")
+
+
+fortress_sign = Item(
+    name="Fortress sign",
+    description=fortress_sign_interaction,
+    usable_on=[],
+    can_take=False
+)
+
+
+rusty_key = UsableItem(
+    name="Rusty Key",
+    description="It's a very old key covered in rust. It's big, so it will probably fit a big lock.",
+    can_take=True,
+    usable_on=[],
+    solve_puzzle=clear_stage_one
+)
+
+bird = Item(
+    name="Bird (the Boat)",
+    description="...",
+    usable_on=[],
+    can_take=False
 )
 
 if __name__ == '__main__':

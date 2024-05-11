@@ -3,7 +3,7 @@ from src.characters import Character, Player
 
 
 class Item:
-    def __init__(self, name:str, description:str, usable_on:list, solve_puzzle, can_take:bool):
+    def __init__(self, name:str, description:str, usable_on:list, can_take:bool, solve_puzzle=False):
         self.name = name
         self.description = description
         self.usable_on = usable_on
@@ -44,13 +44,16 @@ class Item:
             
 
     def inspect(self):
-        print(f"You look at {self.name} more closely...")
-        return fancy_print(self.description)
+        print(f"You look at {self.name} more closely... \n")
+        if isinstance(self.description, str):
+            return fancy_print(self.description)
+        else:
+            return self.description()
     
 
 class Weapon(Item):
     def __init__(self, name, description, usable_on, solve_puzzle, can_take, damage):
-        super().__init__(name, description, usable_on, solve_puzzle, can_take)
+        super().__init__(name, description, usable_on, can_take, solve_puzzle)
         self.damage = damage  # Additional attribute for damage
 
     def __str__(self) -> str:
@@ -61,6 +64,7 @@ class Weapon(Item):
         if self.can_use(player, object):
             player.damage += self.damage 
             fancy_print(f"You equip the {self.name}, your damage is improved by {self.damage}!")
+            player.remove_from_inventory(self)
             return True
         else:
             return False
@@ -68,10 +72,11 @@ class Weapon(Item):
 
 class UsableItem(Item):
     def __init__(self, name, description, usable_on, solve_puzzle, can_take):
-        super().__init__(name, description, usable_on, solve_puzzle, can_take)
+        super().__init__(name, description, usable_on, can_take, solve_puzzle)
 
-    def use(self, player, object):
+    def use(self, player:Player, object):
         # Use the item to interact with a puzzle or environment
         if self.can_use(player, object):
+            player.remove_from_inventory(self)
             return self.solve_puzzle(player, object)  # solve_puzzle could be a method or function
         return False

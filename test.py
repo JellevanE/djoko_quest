@@ -45,13 +45,6 @@ old_wand = Weapon(
     damage= 10
     )
 
-rusty_key = UsableItem(
-    name="Rusty Key",
-    description="It's a very old key covered in rust. It's big, so it will probably fit a big lock.",
-    can_take=True,
-    usable_on=[old_wand],
-    solve_puzzle=testing_stage
-)
 
 # player = Player(name=input(), starting_location="stage 1")
 
