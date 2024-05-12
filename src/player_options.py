@@ -40,7 +40,7 @@ def player_move_to_location(player:Player, location:Location):
     """default action to move to a new location"""
     accessible_locations = location.accessible_locations
 
-    fancy_print(f"You decide to leave {location.name} \n", speed=0.04, dim=True)
+    fancy_print(f"You decide to leave {location.name}.", speed=0.04, dim=True)
     print()
 
     if len(accessible_locations) == 0:
@@ -56,7 +56,7 @@ def player_move_to_location(player:Player, location:Location):
     fancy_print(f"{len(accessible_locations) + 1}: Go back to previous options")
 
     print()
-    selected_number = get_valid_input("I'm going to: ", len(accessible_locations) + 1) #int(input("I'm going to: "))
+    selected_number = get_valid_input("I'm going to: ", len(accessible_locations) + 1)
     print()
 
     # Adjust for zero-based index

@@ -4,7 +4,7 @@ from colorama import init, Fore, Back, Style
 colorama.init(autoreset=True)
 from src.characters import NPC, Player
 from src.items import Item, Weapon, UsableItem
-from create_player import create_player
+from src.utils.create_player import create_player
 from src.fight import fight_character
 from src.locations import Location
 from src.stage_1_objects import cook, skipper, bottle_of_rum
@@ -26,13 +26,6 @@ wizard = NPC(
     self_clear=False,
     will_fight=True
 )
-
-
-# print("\U0001F606")
-
-# print("\U0001F9DA")
-
-# print("\U0001F9CC")
 
 
 
