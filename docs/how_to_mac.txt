@@ -1,0 +1,27 @@
+1. Navigate to the correct folder (like a dev)
+
+- open your terminal
+    - for the true experience: right click on the terminal icon and change the profile by going to 'New window with profile' and select Homebrew or Pro.
+- read yourfolder, type: 'ls' and hit enter
+- navigate to your file, type: 'cd Documents/' hit enter and then type 'cd LIFE' hit enter again and then type 'cd bday 2024'
+- you are now in the correct folder
+
+2. Download the game
+
+- clone the correct repository from github using the following command
+- git clone https://github.com/JellevanE/djoko_quest.git
+- enter the correct folder, type: 'cd djoko_quest'
+
+2. Set up your environment (MAC OS)
+
+- to use the correct python, copy this link in the terminal and hit enter:
+        export PATH="$(brew --prefix)/opt/python@3/libexec/bin:$PATH"
+- create a virtual environment, use the following commands
+        python3 -m venv path/to/venv
+        source path/to/venv/bin/activate
+        pip install -r requirements.txt
+
+3. Start the game
+
+- everything is now set up to play the game. To start playing enter the following command:
+        python main.py

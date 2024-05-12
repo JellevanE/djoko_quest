@@ -18,7 +18,7 @@ class Item:
 
     def pick_up(self, player:Player):
         if self.name in player.inventory:
-            return print(f"{self.name} is already in your inventory.")
+            return fancy_print(f"{self.name} is already in your inventory.", dim=True)
         else:
             if self.can_take == True:
                 return player.add_to_inventory(self)
@@ -28,7 +28,7 @@ class Item:
 
     def can_use(self, player:Player, object=None):
         if self not in player.inventory:
-            return fancy_print(f"{self.name} is not currently in your inventory.")
+            return fancy_print(f"{self.name} is not currently in your inventory.", dim=True)
         
         if isinstance(self, Weapon):
             return True
@@ -36,15 +36,15 @@ class Item:
         else: 
             if object not in self.usable_on:
                 if object == Character:
-                    return fancy_print(f"{Character.name} does not seem interested.")
+                    return fancy_print(f"{Character.name} does not seem interested.", dim=True)
                 else:
-                    return fancy_print("This does not seem like the time or place to use this item.")
+                    return fancy_print("This does not seem like the time or place to use this item.", dim=True)
             else:
                 return True
             
 
     def inspect(self):
-        print(f"You look at {self.name} more closely... \n")
+        fancy_print(f"You look at {self.name} more closely... \n", dim=True)
         if isinstance(self.description, str):
             return fancy_print(self.description)
         else:
@@ -52,8 +52,8 @@ class Item:
     
 
 class Weapon(Item):
-    def __init__(self, name, description, usable_on, solve_puzzle, can_take, damage):
-        super().__init__(name, description, usable_on, can_take, solve_puzzle)
+    def __init__(self, name, description, usable_on, can_take, damage):
+        super().__init__(name, description, usable_on, can_take)
         self.damage = damage  # Additional attribute for damage
 
     def __str__(self) -> str:
@@ -63,7 +63,7 @@ class Weapon(Item):
         # Equip the weapon to the player
         if self.can_use(player, object):
             player.damage += self.damage 
-            fancy_print(f"You equip the {self.name}, your damage is improved by {self.damage}!")
+            fancy_print(f"You equip the {self.name}, your damage is improved by {self.damage}!", dim=True)
             player.remove_from_inventory(self)
             return True
         else:

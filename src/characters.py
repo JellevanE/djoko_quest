@@ -41,7 +41,7 @@ class Player(Character):
 
     def add_to_inventory(self, item):
         self.inventory.append(item)
-        print(f"{item} has been added to your inventory.")
+        fancy_print(f"{item} has been added to your inventory.", dim=True)
 
     def remove_from_inventory(self, item):
         self.inventory.remove(item)
@@ -105,7 +105,7 @@ class NPC(Character):
         return self.reward
     
     def inspect(self):
-        print(f"You look at {self.name} more closely...")
+        fancy_print(f"You look at {self.name} more closely...", dim=True)
         return fancy_print(self.description)
 
 #setting up LLM responses for talk method

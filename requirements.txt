@@ -1,3 +1,4 @@
+wheel
 colored
 colorama
 langchain-openai
@@ -5,3 +6,4 @@ langchain
 langchainhub
 python-dotenv
 python-box
+playsound

@@ -66,7 +66,7 @@ cook = NPC(
     start_message="Ciao bella, welcome to the galley.",
     clear_stage_key="bellissima!",
     text_color="GREEN",
-    text_speed=0.03,
+    text_speed=0.02,
     reward=bottle_of_rum,
     self_clear=True,
     will_fight=True
@@ -111,11 +111,42 @@ rusty_key = UsableItem(
     solve_puzzle=clear_stage_one
 )
 
+lump_of_clay = UsableItem(
+    name="Lump of Clay",
+    description="It's a lump of clay. Don't know what you expected to find here.",
+    can_take=True,
+    usable_on=[],
+    solve_puzzle=clear_stage_one
+)
+
 bird = Item(
     name="Bird (the Boat)",
     description="...",
     usable_on=[],
     can_take=False
+)
+
+wooden_club = Weapon(
+    name="Wooden Club",
+    description="It's a large wooden club. It's quite heavy, but if you give it a good swing it looks like it can do some damage in a fight.",
+    can_take=True,
+    usable_on=[],
+    damage= 3
+    )
+
+spittle_goblin = NPC(
+    name="Spittle the Goblin", 
+    max_hp=10,
+    damage=99,
+    description="An old goblin with mud brown skin. She's rattling the bars of her cell with a pewter cup and softly humming to herself.",
+    system_prompt="You're a goblin in a jailcell. You respond with poorly spelled jokes and you are fond of coconuts.",
+    start_message="Gabagooool!",
+    clear_stage_key="BJBJ",
+    text_color="Yellow",
+    text_speed=0.03,
+    reward=lump_of_clay,
+    self_clear=True,
+    will_fight=False
 )
 
 if __name__ == '__main__':

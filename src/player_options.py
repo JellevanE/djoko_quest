@@ -67,7 +67,7 @@ def player_move_to_location(player:Player, location:Location):
         fancy_print("Returning to previous options...")
         fancy_print(f"You are still at {location.name}")
         print()
-        fancy_print(f"{location.description}")
+        fancy_print(f"{location.description}", speed=0.02)
         print()
         return player_options(player=player, location=location)
 
@@ -76,7 +76,7 @@ def player_move_to_location(player:Player, location:Location):
         selected_location = accessible_locations[selected_index]
         location = selected_location #update location
 
-        fancy_print(f"{player.name} travels to {location.name}.")
+        fancy_print(f"{player.name} travels to {location.name}.", dim=True)
         fancy_print(f"{location.description}")
         print()
         return player_options(player=player, location=location)
@@ -114,7 +114,7 @@ def player_choose_npc(player:Player, location:Location):
         fancy_print("Returning to previous options...")
         fancy_print(f"You are still at {location.name}")
         print()
-        fancy_print(f"{location.description}")
+        fancy_print(f"{location.description}", speed=0.02)
         print()
         return player_options(player=player, location=location)
     
@@ -168,7 +168,8 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
             return fight_character(player=player, character=npc)
 
         if npc.will_fight == False:
-            fancy_print(f"It doesn't look like {npc.name} is interested in fighting you.")
+            print()
+            fancy_print(f"It doesn't look like {npc.name} is interested in fighting you.", dim=True)
             return interact_with_npc(player=player, location=location, npc=npc)
 
     if npc_action.lower() == "c": #inspect character

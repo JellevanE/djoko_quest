@@ -7,7 +7,7 @@ from src.utils.utils import fancy_print
 from scenes_text.island_campfire import opening_wake_up, ascii_island
 from test import wizard, old_wand
 from src.player_options import player_options
-from src.stage_1_objects import bottle_of_rum, skipper, cook, natural_wine, fortress_sign, rusty_key, bird
+from src.stage_1_objects import bottle_of_rum, skipper, cook, natural_wine, fortress_sign, rusty_key, bird, wooden_club, spittle_goblin
 
 
 
@@ -68,24 +68,28 @@ def create_island_locations():
         description="""
         You enter the hallway. 
         The walls are slabs of grey concrete and the ceiling is high and slightly arched.
-        It's dimly lit by a few candles scattered along the walls. The is some debris on the floor.
+        It's dimly lit by a few candles scattered along the walls. There is some debris on the floor.
 
-        At one end of the hallway is the entrance to the island. 
-        At the other end the hallway splits into two doorways. 
+        At one end of the hallway is the entrance to the island,
+        at the other end the hallway splits into two doorways. 
         Through one the light of a hearthfire shines. 
         The light is accompanied by the smell of fried onions, melted butter and some spices you can't quite place.
         You figure it must be the kitchen. 
-        The other portal is dark and seems deserted.   
-        """,
-        interactions=[rusty_key],
-        objects=[]
+        The other portal is dark and seems deserted.""",
+        interactions=[],
+        objects=[rusty_key]
     )
 
     island_fortress_dungeons = Location(
         name="the fortress dungeons",
-        description="add description here",
-        interactions=[],
-        objects=[]
+        description="""
+        The dungeon is dark, humid and moldy. Somebody should really do some sfeer-beheer in here...
+        There are some weapon racks to your left and cells on your right. 
+        The cells are empty except for an old female goblin.
+
+        Behind you is the doorway leading back to the fortress hallway.""",
+        interactions=[spittle_goblin],
+        objects=[wooden_club]
     )
 
     island_fortress_kitchens = Location(
