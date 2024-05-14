@@ -75,7 +75,7 @@ def create_island_locations():
         Through one the light of a hearthfire shines. 
         The light is accompanied by the smell of fried onions, melted butter and some spices you can't quite place.
         You figure it must be the kitchen. 
-        The other portal is dark and seems deserted.""",
+        The other doorway looks dark and seems deserted.""",
         interactions=[],
         objects=[rusty_key]
     )

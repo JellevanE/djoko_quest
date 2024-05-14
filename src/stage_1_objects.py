@@ -3,6 +3,8 @@ from src.characters import Character, NPC, Player
 from src.locations import Location
 from src.items import Item, UsableItem, Weapon
 from src.utils.utils import fancy_print
+from playsound import playsound
+from stage_2 import enter_stage_two
 
 
 
@@ -31,6 +33,7 @@ wizard = NPC(
 )
 
 
+#DOCKS OBJECTS
 skipper = NPC(
     name="Marlowe the Skipper", 
     max_hp=15,
@@ -38,20 +41,33 @@ skipper = NPC(
     description="It looks like this is the person that owns the little skiff at the end of the pier. He has a brawny physique. His weatherbeaten face has leathery skin and around his eyes you can see thin crowfeet lines from years of squinting at the sun. As you come closer you notice he smells heavily like spiced rum.",
     system_prompt="You are a unhelpful pirate who is both a bit hungover and a bit drunk. You ridicule the user and curse at the user in sailor slang.",
     start_message="Aye?",
-    clear_stage_key="Baconator",
+    clear_stage_key="baconator",
     text_color="BLUE",
     text_speed=0.06,
-    reward=clear_stage_one,
+    reward=enter_stage_two,
     self_clear=False,
     will_fight=True
 )
 
 
+def inspect_bird():
+    playsound("src/sounds/sax-jazz-jazz-sax-riff.mp3", block=True)
+    fancy_print("It's a magnificent ship. .. descr. Charlie Parker.")
+
+
+bird = Item(
+    name="Bird (the Boat)",
+    description=inspect_bird,
+    usable_on=[],
+    can_take=False
+)
+
+#KITCHEN OBJECTS
 #reward from the cook
 bottle_of_rum = UsableItem(
     name="Bottle of Rum",
     description="A bottle of strong, brown, spiced rum. You can drink it straight, out of a coconut or even a pineapple. It makes you want to sing pirate songs.",
-    solve_puzzle=clear_stage_one,
+    solve_puzzle=skipper.reward,
     usable_on=[skipper],
     can_take=True
 )
@@ -81,7 +97,7 @@ natural_wine = UsableItem(
     usable_on=[cook]
 )
 
-
+#FORTRESS ENTRANCE OBJECTS
 def fortress_sign_interaction():
     fancy_print("You see a small moss covered sign hanging next to the fortress entrance, it's hard to make out what is written on it.")
     fancy_print("Do you want to clear off the moss?")
@@ -102,7 +118,7 @@ fortress_sign = Item(
     can_take=False
 )
 
-
+#HALLWAY OBJECTS
 rusty_key = UsableItem(
     name="Rusty Key",
     description="It's a very old key covered in rust. It's big, so it will probably fit a big lock.",
@@ -111,20 +127,22 @@ rusty_key = UsableItem(
     solve_puzzle=clear_stage_one
 )
 
+hallway_portrait = Item(
+    name="Portraits",
+    description="It's a portrait of two sailors and a captain that all look rather feminine. \nThe description reads: 'Dido, Neel Cuyper and Cpt. A. Bonny'.",
+    usable_on=[],
+    can_take=False
+)
+
+#DUNGEON OBJECTS
 lump_of_clay = UsableItem(
     name="Lump of Clay",
     description="It's a lump of clay. Don't know what you expected to find here.",
     can_take=True,
-    usable_on=[],
+    usable_on=[wizard],
     solve_puzzle=clear_stage_one
 )
 
-bird = Item(
-    name="Bird (the Boat)",
-    description="...",
-    usable_on=[],
-    can_take=False
-)
 
 wooden_club = Weapon(
     name="Wooden Club",
@@ -139,7 +157,7 @@ spittle_goblin = NPC(
     max_hp=10,
     damage=99,
     description="An old goblin with mud brown skin. She's rattling the bars of her cell with a pewter cup and softly humming to herself.",
-    system_prompt="You're a goblin in a jailcell. You respond with poorly spelled jokes and you are fond of coconuts.",
+    system_prompt="You're a goblin in a jailcell (in a video game). You have poor control over the English language. Somtimes you will respond with poor jokes. Also, you are fond of coconuts.",
     start_message="Gabagooool!",
     clear_stage_key="BJBJ",
     text_color="Yellow",

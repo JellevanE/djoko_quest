@@ -3,7 +3,7 @@ from src.characters import Character, Player
 
 
 class Item:
-    def __init__(self, name:str, description:str, usable_on:list, can_take:bool, solve_puzzle=False):
+    def __init__(self, name:str, description:str, usable_on:list, can_take:bool, solve_puzzle=None):
         self.name = name
         self.description = description
         self.usable_on = usable_on

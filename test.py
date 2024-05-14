@@ -3,8 +3,8 @@ from src.items import Item, Weapon, UsableItem
 from src.utils.create_player import create_player
 from src.fight import fight_character
 from src.locations import Location
-from src.stage_1_objects import cook, skipper, bottle_of_rum, spittle_goblin
-from playsound import playsound
+from src.stage_1_objects import cook, skipper, bottle_of_rum, spittle_goblin, skipper
+#from playsound import playsound
 
 def testing_stage(player:Player):
     return print(f"you are granted access and can enter the next stage, {player.name}!")
@@ -37,10 +37,11 @@ old_wand = Weapon(
 
 #player = Player(name=input(), starting_location="stage 1")
 
-# fight_character(player=player, character=cook)
+# player.add_to_inventory(bottle_of_rum)
 
-#spittle_goblin.talk(player=player)
+# # fight_character(player=player, character=cook)
 
-playsound("sounds/sax-jazz-jazz-sax-riff.mp3")
+# skipper.talk(player=player)
 
-print("playing jazz sound")
+
+

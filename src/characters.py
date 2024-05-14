@@ -5,6 +5,7 @@ from colored import fg, cprint
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.memory import ChatMessageHistory
+from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 from src.utils.utils import fancy_print
@@ -93,7 +94,7 @@ class NPC(Character):
             
             response = chat_chain.invoke( #llm response
                 {"input": f"{user_input}"},
-                {"configurable": {"session_id": "unused"}}).content
+                {"configurable": {"session_id": "chat_history"}}).content
             fancy_print(text=f"\t{self.name}: {response}", speed=self.text_speed, color=self.text_color)
 
             #check for clear stage key
@@ -135,17 +136,23 @@ def create_chat_prompt(character:Character):
         ]
     )
 
+store = {}
+
+def get_session_history(session_id: str) -> BaseChatMessageHistory:
+    if session_id not in store:
+        store[session_id] = ChatMessageHistory()
+    return store[session_id]
 
 def create_chat_chain(character:Character):
     """Initiates a chat chain with conversation memory"""
     llm = create_llm()
     prompt = create_chat_prompt(character=character)
     chain = prompt | llm
-    chat_history = ChatMessageHistory()
+    #chat_history = ChatMessageHistory()
     return RunnableWithMessageHistory(
         chain,
-        lambda session_id: chat_history,
+        get_session_history=get_session_history,
         input_messages_key="input",
         output_messages_key="output",
-        history_messages_key="chat_history"
+        history_messages_key="chat_history",
         )

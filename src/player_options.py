@@ -153,10 +153,12 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
             print()
             result.pick_up(player=player)
 
+        #result false means the user stops the chat
         if result == False:
             print()
             return interact_with_npc(player=player, location=location, npc=npc)
         
+        #check if result is a function
         if hasattr(result, '__call__'):
             result(player)
         else:
@@ -336,21 +338,23 @@ def player_use_item(player:Player, location:Location, use:bool, inspect:bool):
         fancy_print("Invalid number, please enter a number from the list.")
         player_use_item(player=player, use=use, inspect=inspect)
 
-def use_item_on(player:Player, location:Location, item:Item):
+def use_item_on(player: Player, location: Location, item: Item):
+    #if item is weapon, equip weapon
     if isinstance(item, Weapon):
         return item.use(player=player)
-    
+
+    #for usable items check what to use on
     if isinstance(item, UsableItem):
         fancy_print(f"What do you want to use {item.name} on?")
 
         object_list = location.interactions + location.objects
-        
-        for i, item in enumerate(object_list, start=1):
-            fancy_print(f"{i}: {item}")
+
+        for i, obj in enumerate(object_list, start=1):
+            fancy_print(f"{i}: {obj}")
 
         # Adding an option to go back to the previous menu
         fancy_print(f"{len(object_list) + 1}: Go back to previous options")
-    
+
         print()
         selected_number = get_valid_input(f"{player.name}: ", len(object_list) + 1)
         print()
@@ -365,12 +369,43 @@ def use_item_on(player:Player, location:Location, item:Item):
             fancy_print(f"{location.description}")
             print()
             return player_options(player=player, location=location)
-    
+
         # Validating if the input is within the available item range
         if 0 <= selected_index < len(object_list):
-
             selected_object = object_list[selected_index]
-            item.use(player=player, object=selected_object)  #### FIX THIS FUNCTION
-        
-            print()
-            return player_options(player=player, location=location)
+
+            if selected_object in item.usable_on:
+
+                if isinstance(selected_object, NPC):
+                    fancy_print(f"You give {item.name} to {selected_object}. \n", dim=True)
+                    result = selected_object.reward
+
+                    if isinstance(result, Item):
+                        print()
+                        result.pick_up(player=player)
+                        return player_options(player=player, location=location)
+                    else:
+                        return result
+
+                if isinstance(selected_object, Item):
+                    fancy_print(f"You give {item.name} to {selected_object}. \n", dim=True)
+                    result =  selected_object.solve_puzzle
+
+                    if isinstance(result, Item):
+                        print()
+                        result.pick_up(player=player)
+                        return player_options(player=player, location=location)  
+                    else:
+                        return result
+                    
+            else:
+                fancy_print("This item can't be used in this way.\n", dim=True)
+                return use_item_on(player=player, location=location, item=item)
+
+        else:
+            fancy_print("Invalid number, please enter a number from the list.\n")
+            return use_item_on(player=player, location=location, item=item)
+
+    fancy_print("This item can't be used in this way.", dim=True)
+
+    return player_options(player=player, location=location)
