@@ -12,6 +12,7 @@ from src.utils.utils import fancy_print
 from src.utils.healthbar import Healthbar
 
 
+
 # Defining the character object and it's methods
 
 class Character:
@@ -42,7 +43,7 @@ class Player(Character):
 
     def add_to_inventory(self, item):
         self.inventory.append(item)
-        fancy_print(f"{item} has been added to your inventory.", dim=True)
+        fancy_print(f"{item} has been added to your inventory.\n", dim=True)
 
     def remove_from_inventory(self, item):
         self.inventory.remove(item)
@@ -51,15 +52,15 @@ class Player(Character):
         pprint.pprint(f"Your inventory contains: {self.inventory}")
 
 
-
 class NPC(Character):
-    def __init__(self, name:str, max_hp:int, damage:int, description:str, system_prompt:str, start_message:str, clear_stage_key:str, text_color, text_speed:float, reward, self_clear:bool, will_fight:bool) -> None:
+    def __init__(self, name:str, max_hp:int, damage:int, description:str, system_prompt:str, start_message:str, clear_stage_key:str, text_color, text_speed:float, reward, solve_puzzle, self_clear:bool, will_fight:bool) -> None:
         super().__init__(name=name, hp=max_hp, damage=damage)
         self.description = description
         self.system_prompt = system_prompt
         self.start_message = start_message
         self.clear_stage_key = clear_stage_key
         self.reward = reward
+        self.solve_puzzle = solve_puzzle
         self.self_clear = self_clear
         self.text_color = text_color
         self.text_speed = text_speed

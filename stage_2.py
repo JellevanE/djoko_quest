@@ -9,7 +9,7 @@ from src.stage_2_objects import acne_scarf
 from scenes_text.stage_two_text import entering_stage_two, ascii_boat_trip, reset_stats_and_stuff
 
 
-def enter_stage_two(player:Player):
+def enter_stage_two(player:Player, location:Location, npc=None):
     """Starts the second of the story"""
     #set up locations for stage 2
     locations = create_harbour_locations()
@@ -43,16 +43,16 @@ def create_harbour_locations():
 
         To the north you can see the outline of a blocky old fortress.
         To the west you see several masts on the horizon signifying a harbour.""",
-        interactions=[],
-        objects=[]
+        NPCS=[],
+        items=[]
         )
 
     market = Location(
         name="",
         description="""
         """,
-        interactions=[],
-        objects=[]
+        NPCS=[],
+        items=[]
     )
 
     #setup connections

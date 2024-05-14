@@ -1,11 +1,10 @@
 Stage 1
 
-1. FIX ITEM.USE Function for usable items
 2. Write location descriptions stage 1
 3. Fill locations stage 1 (NPCS)
 4. Fill locations stage 1 (Items)
 5. Make text look nice and clean
-6. Add several sounds using playsound (test)
+
 
 Stage 2
 

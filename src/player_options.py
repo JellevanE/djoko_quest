@@ -7,8 +7,7 @@ from src.fight import fight_character
 
 def player_options(player:Player, location = Location):
     """Access default action options for a player in a certain location"""
-    fancy_print("What do you do?")
-    fancy_print("""
+    fancy_print("""What do you do?
           a: move
           b: interact
           c: inspect
@@ -40,7 +39,7 @@ def player_move_to_location(player:Player, location:Location):
     """default action to move to a new location"""
     accessible_locations = location.accessible_locations
 
-    fancy_print(f"You decide to leave {location.name}.", speed=0.04, dim=True)
+    fancy_print(f"You decide to leave {location.name}.", speed=0.004, dim=True)
     print()
 
     if len(accessible_locations) == 0:
@@ -56,7 +55,7 @@ def player_move_to_location(player:Player, location:Location):
     fancy_print(f"{len(accessible_locations) + 1}: Go back to previous options")
 
     print()
-    selected_number = get_valid_input("I'm going to: ", len(accessible_locations) + 1)
+    selected_number = get_valid_input("I'm will travel to: ", len(accessible_locations) + 1)
     print()
 
     # Adjust for zero-based index
@@ -66,8 +65,6 @@ def player_move_to_location(player:Player, location:Location):
     if selected_number == len(accessible_locations) + 1:
         fancy_print("Returning to previous options...")
         fancy_print(f"You are still at {location.name}")
-        print()
-        fancy_print(f"{location.description}", speed=0.02)
         print()
         return player_options(player=player, location=location)
 
@@ -87,7 +84,7 @@ def player_move_to_location(player:Player, location:Location):
 
 
 def player_choose_npc(player:Player, location:Location):
-    npcs_list = location.interactions
+    npcs_list = location.NPCS
     
     #check if there are NPCs
     if len(npcs_list) == 0:
@@ -160,7 +157,7 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
         
         #check if result is a function
         if hasattr(result, '__call__'):
-            result(player)
+            result(player, location, npc)
         else:
             return npc.reward
 
@@ -183,6 +180,7 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
         return interact_with_npc(player=player, location=location, npc=npc)
     
     if npc_action.lower() == "d": #inventory action
+        print()
         return player_options(player=player, location=location)
 
     return player_options(player=player, location=location)
@@ -202,7 +200,7 @@ def inspect_action(player:Player, location:Location):
 
 def player_inspect_object(player:Player, location:Location):
     """enumerates objects to inspect and prompts player"""
-    items = location.objects
+    items = location.items
     if len(items) == 0:
         fancy_print("There seem to be no items of importance here.")
         print()
@@ -233,7 +231,7 @@ def player_inspect_object(player:Player, location:Location):
     # Validating if the input is within the available item range
     if 0 <= selected_index < len(items):
         selected_item = items[selected_index]
-        selected_item.inspect()
+        selected_item.inspect(location=location)
 
         print()
         fancy_print(f"Do you want to take {selected_item.name}?", speed=0.05, dim=True)
@@ -241,12 +239,12 @@ def player_inspect_object(player:Player, location:Location):
 
         while take_item not in ["yes", "no"]:
             take_item = input("yes/no: ")
+            print()
             if take_item.lower() == "yes":
                 selected_item.pick_up(player=player)
-                print()
 
                 if selected_item.can_take == True:
-                    location.objects.remove(selected_item)
+                    location.items.remove(selected_item)
 
                 return player_options(player=player, location=location)
             
@@ -318,12 +316,7 @@ def player_use_item(player:Player, location:Location, use:bool, inspect:bool):
     selected_index = selected_number - 1
 
     if selected_number == len(items) + 1:
-        fancy_print("Returning to previous options...")
-        fancy_print(f"You are still at {location.name}")
-        print()
-        fancy_print(f"{location.description}")
-        print()
-        return player_options(player=player, location=location)
+        return inventory_action(player=player, location=location)
 
     # Validating if the input is within the available item range
     if 0 <= selected_index < len(items):
@@ -347,7 +340,7 @@ def use_item_on(player: Player, location: Location, item: Item):
     if isinstance(item, UsableItem):
         fancy_print(f"What do you want to use {item.name} on?")
 
-        object_list = location.interactions + location.objects
+        object_list = location.NPCS + location.items
 
         for i, obj in enumerate(object_list, start=1):
             fancy_print(f"{i}: {obj}")
@@ -366,8 +359,6 @@ def use_item_on(player: Player, location: Location, item: Item):
             fancy_print("Returning to previous options...")
             fancy_print(f"You are still at {location.name}")
             print()
-            fancy_print(f"{location.description}")
-            print()
             return player_options(player=player, location=location)
 
         # Validating if the input is within the available item range
@@ -378,17 +369,19 @@ def use_item_on(player: Player, location: Location, item: Item):
 
                 if isinstance(selected_object, NPC):
                     fancy_print(f"You give {item.name} to {selected_object}. \n", dim=True)
-                    result = selected_object.reward
+                    result = selected_object.solve_puzzle
+                    player.remove_from_inventory(item=item)
 
                     if isinstance(result, Item):
                         print()
                         result.pick_up(player=player)
                         return player_options(player=player, location=location)
                     else:
-                        return result
+                        result(player=player, location=location, npc=selected_object)
+                        return player_options(player=player, location=location)
 
                 if isinstance(selected_object, Item):
-                    fancy_print(f"You give {item.name} to {selected_object}. \n", dim=True)
+                    fancy_print(f"You use {item.name} on {selected_object}. \n", dim=True)
                     result =  selected_object.solve_puzzle
 
                     if isinstance(result, Item):
@@ -396,7 +389,8 @@ def use_item_on(player: Player, location: Location, item: Item):
                         result.pick_up(player=player)
                         return player_options(player=player, location=location)  
                     else:
-                        return result
+                        result(player=player, location=location)
+                        return player_options(player=player, location=location)
                     
             else:
                 fancy_print("This item can't be used in this way.\n", dim=True)

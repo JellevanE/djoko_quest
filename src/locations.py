@@ -6,12 +6,12 @@ from src.items import Item
 
 class Location:
     """class to access all objects in a location"""
-    def __init__(self, name:str, description:str, interactions:list[NPC], objects:list[Item]) -> None:
+    def __init__(self, name:str, description:str, NPCS:list[NPC], items:list[Item]) -> None:
         self.name = name
         self.description = description
         self.accessible_locations = []
-        self.interactions = interactions
-        self.objects = objects      
+        self.NPCS = NPCS
+        self.items = items      
         pass
 
     def __str__(self) -> str:
@@ -27,5 +27,13 @@ class Location:
         details += "\nAccessible Locations:"
         for loc in self.accessible_locations:
             details += f"\n- {loc.name}"
-        return details    
+        return details
+    
+    def add_item(self, item: Item):
+        if item not in self.items:
+            self.items.append(item)
+
+    def add_npc(self, npc: NPC):
+        if npc not in self.NPCS:
+            self.NPCS.append(npc)
     

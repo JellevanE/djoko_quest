@@ -3,8 +3,10 @@ from src.items import Item, Weapon, UsableItem
 from src.utils.create_player import create_player
 from src.fight import fight_character
 from src.locations import Location
-from src.stage_1_objects import cook, skipper, bottle_of_rum, spittle_goblin, skipper
+from src.stage_1_objects import cook, skipper, bottle_of_rum, spittle_goblin, skipper, natural_wine
 #from playsound import playsound
+from src.stage_1_objects import inspect_bird
+from src.player_options import use_item_on
 
 def testing_stage(player:Player):
     return print(f"you are granted access and can enter the next stage, {player.name}!")
@@ -16,6 +18,7 @@ wizard = NPC(
     start_message= "What do you want?",
     clear_stage_key= 'ceramics',
     reward= testing_stage,
+    solve_puzzle= testing_stage,
     text_color= "RED",
     text_speed=0.04,
     max_hp = 5,
@@ -35,13 +38,17 @@ old_wand = Weapon(
     )
 
 
-#player = Player(name=input(), starting_location="stage 1")
+# player = Player(name=input(), starting_location="stage 1")
 
 # player.add_to_inventory(bottle_of_rum)
+
+# player.add_to_inventory(natural_wine)
+
+# use_item_on(player=player, location=None, item=natural_wine)
 
 # # fight_character(player=player, character=cook)
 
 # skipper.talk(player=player)
 
 
-
+#inspect_bird(location=None)

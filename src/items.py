@@ -43,12 +43,12 @@ class Item:
                 return True
             
 
-    def inspect(self):
+    def inspect(self, location=None):
         fancy_print(f"You look at {self.name} more closely... \n", dim=True)
         if isinstance(self.description, str):
             return fancy_print(self.description)
         else:
-            return self.description()
+            return self.description(location)
     
 
 class Weapon(Item):
