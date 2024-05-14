@@ -23,7 +23,7 @@ class Item:
             if self.can_take == True:
                 return player.add_to_inventory(self)
             else:
-                return fancy_print("It doesn't look like you can take this", dim=True)
+                return fancy_print("It doesn't look like you can take this.\n", dim=True)
 
 
     def can_use(self, player:Player, object=None):
@@ -43,12 +43,12 @@ class Item:
                 return True
             
 
-    def inspect(self, location=None):
+    def inspect(self, player=None, location=None):
         fancy_print(f"You look at {self.name} more closely... \n", dim=True)
         if isinstance(self.description, str):
             return fancy_print(self.description)
         else:
-            return self.description(location)
+            return self.description(player, location)
     
 
 class Weapon(Item):

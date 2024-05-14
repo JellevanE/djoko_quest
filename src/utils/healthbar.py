@@ -32,8 +32,9 @@ class Healthbar:
         self.is_colored = is_colored
         self.color = self.colors.get(color) or self.colors["default"]
 
-    def update(self): 
+    def update(self):
         self.current_value = self.entity.hp
+        self.max_value = self.entity.max_hp  # Update max_value to reflect changes in max_hp
 
     def draw(self) -> None:
         remaining_bars = round(self.current_value / self.max_value * self.length)

@@ -9,7 +9,7 @@ from src.stage_2_objects import acne_scarf
 from scenes_text.stage_two_text import entering_stage_two, ascii_boat_trip, reset_stats_and_stuff
 
 
-def enter_stage_two(player:Player, location:Location, npc=None):
+def enter_stage_two(player:Player, location=None, npc=None):
     """Starts the second of the story"""
     #set up locations for stage 2
     locations = create_harbour_locations()
@@ -27,6 +27,7 @@ def enter_stage_two(player:Player, location:Location, npc=None):
     player.hp = player.max_hp
     player.damage =+2
     fancy_print(f"Your max heath is now {player.max_hp} and your damage is {player.damage}!")
+    player.health_bar.update()
     player.health_bar.draw()
     print()
 

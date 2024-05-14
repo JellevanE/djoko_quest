@@ -8,6 +8,7 @@ from src.fight import fight_character
 def player_options(player:Player, location = Location):
     """Access default action options for a player in a certain location"""
     fancy_print("""What do you do?
+                
           a: move
           b: interact
           c: inspect
@@ -231,7 +232,7 @@ def player_inspect_object(player:Player, location:Location):
     # Validating if the input is within the available item range
     if 0 <= selected_index < len(items):
         selected_item = items[selected_index]
-        selected_item.inspect(location=location)
+        selected_item.inspect(player=player, location=location)
 
         print()
         fancy_print(f"Do you want to take {selected_item.name}?", speed=0.05, dim=True)
