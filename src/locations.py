@@ -44,4 +44,17 @@ class Location:
     def remove_npc(self, npc:NPC):
         if npc in self.NPCS:
             self.NPCS.remove(npc)
-    
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'description': self.description,
+            'NPCS': [npc.to_dict() for npc in self.NPCS],
+            'items': [item.to_dict() for item in self.items],
+            'accessible_locations': [loc.name for loc in self.accessible_locations]
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        location = cls(name=data['name'], description=data['description'], NPCS=[NPC.from_dict(npc) for npc in data['NPCS']], items=[Item.from_dict(item) for item in data['items']])
+        return location

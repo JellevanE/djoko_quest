@@ -48,8 +48,8 @@ witch = NPC(
     reward= clear_stage_one,
     text_color= "RED",
     text_speed=0.04,
-    max_hp = 5,
-    damage = 8,
+    max_hp = 23,
+    damage = 7,
     self_clear=False,
     will_fight=True
 )
@@ -235,8 +235,8 @@ sven = NPC(
     reward= nordic_music,
     text_color= "CYAN",
     text_speed=0.03,
-    max_hp = 15,
-    damage = 6,
+    max_hp = 14,
+    damage = 4,
     self_clear=False,
     will_fight=True
 )
@@ -279,7 +279,7 @@ francoise = NPC(
     text_color= "GREEN",
     text_speed=0.02,
     max_hp = 10,
-    damage = 6,
+    damage = 7,
     self_clear=False,
     will_fight=True
 )

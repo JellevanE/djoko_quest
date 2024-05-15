@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 from src.locations import Location
-from src.characters import Player, NPC
-from src.items import Item
+from src.characters import Player
 from src.utils.utils import fancy_print
 from scenes_text.island_campfire import opening_wake_up, ascii_island
-from test import wizard, old_wand
 from src.player_options import player_options
-from src.stage_1_objects import bottle_of_rum, skipper, cook, natural_wine, fortress_sign, rusty_key, bird, wooden_club, spittle_goblin, sandy_ground, hallway_portrait, palm_trees, guards_helmet, cooking_pot, bag_of_spices, old_guard
+from src.stage_1_objects import skipper, cook, natural_wine, fortress_sign, rusty_key, bird, wooden_club, spittle_goblin, sandy_ground, hallway_portrait, palm_trees, guards_helmet, cooking_pot, bag_of_spices, old_guard
 from playsound import playsound
 
 
@@ -20,9 +18,8 @@ def enter_stage_one(player:Player):
     #print opening scene text and add natural wine to inventory
     playsound("src\sounds\seagulls.wav", block=False)
     fancy_print(ascii_island, speed=0.01, color="YELLOW")
-    fancy_print(opening_wake_up, speed=0.01)
+    fancy_print(opening_wake_up, speed=0.03)
     natural_wine.pick_up(player=player)
-    print()
 
     #start game loop and place player at campfire
     player_options(player=player, location=locations['campfire'])

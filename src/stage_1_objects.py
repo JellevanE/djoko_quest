@@ -102,7 +102,7 @@ pirate_cutlass = Weapon(
     description="It's an old cutlass found in a pirate treasure chest! The blade is not very sharp, but it's set with beautiful ruby gemstones.",
     can_take=True,
     usable_on=[],
-    damage= 6
+    damage= 5
     )
 
 
@@ -178,9 +178,9 @@ palm_trees = Item(
 #DOCKS OBJECTS
 skipper = NPC(
     name="Marlowe the Skipper", 
-    max_hp=15,
-    damage=5,
-    description="It looks like this is the person that owns the little skiff at the end of the pier. He has a brawny physique. His weatherbeaten face has leathery skin and around his eyes you can see thin crowfeet lines from years of squinting at the sun. As you come closer you notice he smells heavily like spiced rum.",
+    max_hp=14,
+    damage=4,
+    description="It looks like this is the person that owns the little skiff at the end of the pier. \nHe has a brawny physique. His weatherbeaten face has leathery skin and around his eyes you can see thin crowfeet lines from years of squinting at the sun. \nAs you come closer you notice he smells heavily like spiced rum.",
     system_prompt="You are a unhelpful pirate who is both a bit hungover and a bit drunk. You ridicule the user and curse at the user in sailor slang.",
     start_message="Aye?",
     clear_stage_key="baconator",
@@ -292,9 +292,9 @@ def fortress_sign_interaction(player, location:Location):
     fancy_print("You see a small moss covered sign hanging next to the fortress entrance, it's hard to make out what is written on it.")
     fancy_print("Do you want to clear off the moss?")
     player_input = ""
-    print()
     while player_input not in ["yes", "no"]:
         player_input = input("yes/no: ")
+        print()
         if player_input.lower() == "yes":
             return fancy_print("You scrape of several layers of moss and read the sign closely... \nYou make out the letters 'Fort aan het Pampus, sedert 1887'. You wonder what it means.")
         if player_input.lower() == "no":

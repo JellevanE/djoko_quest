@@ -51,6 +51,25 @@ class Player(Character):
     def check_inventory(self):
         pprint.pprint(f"Your inventory contains: {self.inventory}")
 
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'hp': self.hp,
+            'max_hp': self.max_hp,
+            'damage': self.damage,
+            'current_location': self.current_location.name if self.current_location else None,
+            'inventory': [item.to_dict() for item in self.inventory]
+        }
+
+    @classmethod
+    def from_dict(cls, data, locations_dict):
+        player = cls(name=data['name'], starting_location=locations_dict[data['current_location']], max_hp=data['max_hp'])
+        player.hp = data['hp']
+        player.damage = data['damage']
+        player.inventory = [item.from_dict(item) for item in data['inventory']]
+        return player
+
+
 
 class NPC(Character):
     def __init__(self, name:str, max_hp:int, damage:int, description:str, system_prompt:str, start_message:str, clear_stage_key:str, text_color, text_speed:float, reward, solve_puzzle, self_clear:bool, will_fight:bool) -> None:
