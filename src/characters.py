@@ -152,10 +152,11 @@ def create_chat_chain(character:Character):
     llm = create_llm()
     prompt = create_chat_prompt(character=character)
     chain = prompt | llm
-    #chat_history = ChatMessageHistory()
+    chat_history = ChatMessageHistory()
+    chat_history.clear()
     return RunnableWithMessageHistory(
         chain,
-        get_session_history=get_session_history,
+        lambda session_id: chat_history,
         input_messages_key="input",
         output_messages_key="output",
         history_messages_key="chat_history",

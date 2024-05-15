@@ -112,8 +112,6 @@ def player_choose_npc(player:Player, location:Location):
         fancy_print("Returning to previous options...")
         fancy_print(f"You are still at {location.name}")
         print()
-        fancy_print(f"{location.description}", speed=0.02)
-        print()
         return player_options(player=player, location=location)
     
     # Validating if the input is within the available item range
@@ -165,7 +163,7 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
     if npc_action.lower() == "b": #fight character
 
         if npc.will_fight == True:
-            return fight_character(player=player, character=npc)
+            return fight_character(player=player, character=npc, location=location)
 
         if npc.will_fight == False:
             print()

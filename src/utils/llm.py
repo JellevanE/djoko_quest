@@ -27,5 +27,5 @@ def chat_prompt(system_prompt, user_prompt):
 def generate_text(system_prompt, user_prompt) -> str:
     """generate an llm response by providing the role of the model and the question"""
     prompt = chat_prompt(system_prompt=system_prompt, user_prompt=user_prompt)
-    llm = create_llm(max_tokens=100)
+    llm = create_llm()
     return llm.invoke(prompt).content

@@ -33,6 +33,29 @@ Next to the inn, a shadowy alleyway beckons.
 With a sense of excitement and curiosity, you take your first steps into the Port of Amsterdam, ready to explore all it has to offer.
 """
 
+apothecary_shop_entrance = """
+As the music crescendos, the mural of the moomin troll on the wall starts to glow.
+The painted eyes of the troll open and wink at you, the colors in the mural swirling as it comes to life.
+The image begins to shift and distort, the bricks start shifting as if to open an entrance for you.
+
+With one final powerful note, the transformation completes, revealing the archway to a hidden apothecary shop.
+The ancient wooden door creaks open and a faint, mysterious aroma wafts out.
+"""
+
+fuzzy_bear_gossip = """
+The player has just flirted with you for a bit and now you feel like gossiping.
+You talk about two other patrons that are present in the inn. Here is some information about them (feel free to add on a little bit)
+    
+1) Sven the Bard, who is admittedly quite handsome if you don't think about the braids.
+He probably has more knowledge about magical society than he lets on.
+He also does have a tendency to make everything about the nordic countries.
+MOST IMPORTANTLY: HE LOVES RABBIT STEW, IF YOU NEED HIM FOR SOMETHING THIS IS HANDY INFO
+    
+2) Françoise the Ranger, who is at least equally handsome.
+The most important gossip here is that, even though she is a ranger, nobody ever sees her eat meat.
+The only thing she seems to enjoy are sweets and pastries. 
+She might be a vegetarian."""
+
 ascii_boat_trip = r"""
              ____
               ---|

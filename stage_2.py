@@ -7,13 +7,13 @@ from src.characters import Player, NPC
 from src.items import Item
 from src.utils.utils import fancy_print
 from src.player_options import player_options
-from src.stage_2_objects import acne_scarf, bear, witch, sven, francoise, statue, stroopwafels
+from src.stage_2_objects import acne_scarf, bear, sven, francoise, statue, stroopwafels, mural_drawing
 from scenes_text.stage_two_text import entering_stage_two, ascii_boat_trip, reset_stats_and_stuff, stage_two_barrier, enter_the_harbor
 from playsound import playsound
 from src.utils.llm import generate_text
 
 def enter_stage_two_fight(player:Player, location=None, npc=None):
-    fancy_print("You strike the old pirate down! That'll teach him to call you names!\n")
+    fancy_print("\nYou strike the old pirate down! That'll teach him to call you names!\n")
 
     response = generate_text(
         system_prompt="You are a drunken pirate who has just received a death blow.",
@@ -76,7 +76,7 @@ def enter_stage_two(player:Player, location=None, npc=None):
     fancy_print(f"\nWell {player.name}, you made it to the second chapter. \n\nYour game is saved. If you die, you can restart from this checkpoint.", bright=True)
     
     #set up locations for stage 2
-    #locations = create_harbour_locations()
+    locations = create_harbour_locations()
 
     #print scene two opening and pick up scarf
     playsound("src\sounds\ocean_waves_sound.wav", block=False)
@@ -118,7 +118,7 @@ def create_harbour_locations():
     market = Location(
         name="market",
         description="""
-        he market near the port of Amsterdam is a cacophony of sounds and a riot of colors. Street children weave through the
+        The market near the port of Amsterdam is a cacophony of sounds and a riot of colors. Street children weave through the
         market stalls, their laughter mingling with the vendors' shouts. The air is thick with the mouth-watering aromas of freshly baked
         bread, sizzling meats, and fragrant spices from all the corners of the earth.
         Each stall seems to hold a new mystery, beckoning you to explore further. 
@@ -143,18 +143,18 @@ def create_harbour_locations():
         items=[stroopwafels]
     )
 
-    market_fruit_stall = Location(
-        name="fruit stall",
-        description="""
-        The fruit stall is a feast for the eyes, with vibrant piles of fresh, juicy fruits arranged in enticing displays. 
-        The vendor is an attractive, bright young woman with a sun-kissed face. She greets you with a broad smile. 
-        The air is filled with the sweet scent of ripe passion fruit, oranges, and strawberries. 
+    # market_fruit_stall = Location(
+    #     name="fruit stall",
+    #     description="""
+    #     The fruit stall is a feast for the eyes, with vibrant piles of fresh, juicy fruits arranged in enticing displays. 
+    #     The vendor is an attractive, bright young woman with a sun-kissed face. She greets you with a broad smile. 
+    #     The air is filled with the sweet scent of ripe passion fruit, oranges, and strawberries. 
         
-        This colorful stall is just one of many on the lively market.
-        """,
-        NPCS=[fruit_vendor],
-        items=[assorted_fruits]
-    )
+    #     This colorful stall is just one of many on the lively market.
+    #     """,
+    #     NPCS=[fruit_vendor],
+    #     items=[assorted_fruits]
+    # )
 
     old_pub = Location(
         name="the Leaky Fawcett Pub",
@@ -183,20 +183,7 @@ def create_harbour_locations():
         On your left is the back entrance to a pub, while the end of the street leads back to the port.  
         """,
         NPCS=[],
-        items=[mural_drawing, crates]
-    )
-
-    apothecary = Location(
-        name="Selma's Curio's Cabinet",
-        description="""
-        Selma's Curio's Cabinet is a mystical little shop. Somehow it seemed completely invisible before, nestled in the back of a cobblestone alley. 
-        The air is thick with the scent of aged parchment and incense. Shelves on the walls are filled with peculiar trinkets and enchanted artifacts.
-
-        The owner (you assume the titular ‘Selma’) is an elderly woman with wise, twinkling eyes. She doesn’t speak but only nods at you. 
-        You notice her hands are rougher than you expected and she carries an aura of quiet power and ancient knowledge.
-        """,
-        NPCS=[witch],
-        items=[potions, grimoire]
+        items=[mural_drawing]
     )
 
 
@@ -207,18 +194,17 @@ def create_harbour_locations():
     market.add_accessible_locations(old_pub)
     alleyway.add_accessible_locations(old_pub)
     market.add_accessible_locations(market_cookie_stall)
-    market.add_accessible_locations(market_fruit_stall)
-    market_fruit_stall.add_accessible_locations(market_cookie_stall)
+    # market.add_accessible_locations(market_fruit_stall)
+    # market_fruit_stall.add_accessible_locations(market_cookie_stall)
 
 
     return {
         "Port of Amsterdam": harbour_entrance,
         "market": market,
         "cookie stall": market_cookie_stall,
-        "fruit stall": market_fruit_stall,
+        # "fruit stall": market_fruit_stall,
         "the Leaky Fawcett Pub":old_pub,
-        "alleyway": alleyway,
-        "Selma's Curio's Cabinet": apothecary
+        "alleyway": alleyway
         }
 
 

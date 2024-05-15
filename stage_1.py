@@ -19,8 +19,8 @@ def enter_stage_one(player:Player):
 
     #print opening scene text and add natural wine to inventory
     playsound("src\sounds\seagulls.wav", block=False)
-    fancy_print(ascii_island, speed=0.001, color="YELLOW")
-    fancy_print(opening_wake_up, speed=0.001)
+    fancy_print(ascii_island, speed=0.01, color="YELLOW")
+    fancy_print(opening_wake_up, speed=0.01)
     natural_wine.pick_up(player=player)
     print()
 

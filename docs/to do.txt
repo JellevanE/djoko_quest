@@ -2,13 +2,5 @@ Stage 1
 
 1. fix text speeds overal
 5. Make text look nice and clean
+6. write readme.md
 
-
-Stage 2
-
-1. Create bear puzzle
-2. Create stroopwafel stand
-3. Create moomin mural
-4. Create secret entrance
-5. add items and characters
-6. add asimbonanga

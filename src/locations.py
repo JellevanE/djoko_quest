@@ -33,7 +33,15 @@ class Location:
         if item not in self.items:
             self.items.append(item)
 
+    def remove_item(self, item:Item):
+        if item in self.items:
+            self.items.remove(item)
+    
     def add_npc(self, npc: NPC):
         if npc not in self.NPCS:
             self.NPCS.append(npc)
+
+    def remove_npc(self, npc:NPC):
+        if npc in self.NPCS:
+            self.NPCS.remove(npc)
     
