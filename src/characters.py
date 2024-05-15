@@ -96,7 +96,10 @@ class NPC(Character):
             response = chat_chain.invoke( #llm response
                 {"input": f"{user_input}"},
                 {"configurable": {"session_id": "chat_history"}}).content
-            fancy_print(text=f"\t{self.name}: {response}", speed=self.text_speed, color=self.text_color)
+            
+            formatted_response = response.replace('\n', '\n\t\t')
+
+            fancy_print(text=f"\t{self.name}: {formatted_response}", speed=self.text_speed, color=self.text_color)
 
             #check for clear stage key
             if self.self_clear == False:

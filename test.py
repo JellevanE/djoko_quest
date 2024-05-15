@@ -7,6 +7,8 @@ from src.stage_1_objects import cook, skipper, bottle_of_rum, spittle_goblin, sk
 #from playsound import playsound
 from src.stage_1_objects import inspect_bird
 from src.player_options import use_item_on
+from src.stage_2_objects import bear, sven
+from stage_2 import enter_stage_two_gift, enter_stage_two_fight, enter_stage_two
 
 def testing_stage(player:Player):
     return print(f"you are granted access and can enter the next stage, {player.name}!")
@@ -38,7 +40,9 @@ old_wand = Weapon(
     )
 
 
-# player = Player(name=input(), starting_location="stage 1")
+player = Player(name=input(), starting_location="stage 1")
+
+enter_stage_two(player=player)
 
 # player.add_to_inventory(bottle_of_rum)
 
@@ -48,7 +52,7 @@ old_wand = Weapon(
 
 # # fight_character(player=player, character=cook)
 
-# skipper.talk(player=player)
+#sven.talk(player=player)
 
 
 #inspect_bird(location=None)

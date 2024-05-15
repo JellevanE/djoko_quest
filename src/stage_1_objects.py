@@ -4,7 +4,7 @@ from src.characters import NPC, Player
 from src.locations import Location
 from src.items import Item, UsableItem, Weapon
 from src.utils.utils import fancy_print
-from stage_2 import enter_stage_two
+from stage_2 import enter_stage_two_fight, enter_stage_two_gift
 from src.stage_2_objects import witch
 from src.utils.llm import generate_text
 
@@ -186,8 +186,8 @@ skipper = NPC(
     clear_stage_key="baconator",
     text_color="BLUE",
     text_speed=0.06,
-    solve_puzzle=enter_stage_two,
-    reward=enter_stage_two,
+    solve_puzzle=enter_stage_two_gift,
+    reward=enter_stage_two_fight,
     self_clear=False,
     will_fight=True
 )

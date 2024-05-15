@@ -1,7 +1,6 @@
 Stage 1
 
-2. Write location descriptions stage 1
-3. Fill locations stage 1 (NPCS)
+1. fix text speeds overal
 5. Make text look nice and clean
 
 
@@ -11,4 +10,5 @@ Stage 2
 2. Create stroopwafel stand
 3. Create moomin mural
 4. Create secret entrance
-5. Write locations
+5. add items and characters
+6. add asimbonanga

@@ -15,13 +15,12 @@ from playsound import playsound
 def enter_stage_one(player:Player):
     """Starts the first stage of the story"""
     #set up locations for stage 1
-    #locations = create_island_locations()
     locations = create_island_locations()
 
     #print opening scene text and add natural wine to inventory
     playsound("src\sounds\seagulls.wav", block=False)
-    #fancy_print(ascii_island, speed=0.001, color="YELLOW")
-    #fancy_print(opening_wake_up, speed=0.001)
+    fancy_print(ascii_island, speed=0.001, color="YELLOW")
+    fancy_print(opening_wake_up, speed=0.001)
     natural_wine.pick_up(player=player)
     print()
 
@@ -131,64 +130,3 @@ def create_island_locations():
         "fortress_kitchens": island_fortress_kitchens,
         "fortress_dungeons": island_fortress_dungeons
     }
-
-def create_test_locations():
-    island_campfire = Location(
-        name="the campfire",
-        description=""".""",
-        NPCS=[],
-        items=[sandy_ground, palm_trees]
-        )
-
-    island_docks = Location(
-        name="the docks",
-        description=""".""",
-        NPCS=[skipper],
-        items=[bird]
-    )
-
-    island_fortress_entrance = Location(
-        name="the fortress entrance",
-        description=".",
-        NPCS=[],
-        items=[fortress_sign]
-    )
-
-    island_fortress_hallway = Location(
-        name="the fortress hallway",
-        description=""".""",
-        NPCS=[],
-        items=[rusty_key, hallway_portrait]
-    )
-
-    island_fortress_dungeons = Location(
-        name="the fortress dungeons",
-        description=""".""",
-        NPCS=[spittle_goblin],
-        items=[wooden_club]
-    )
-
-    island_fortress_kitchens = Location(
-        name="the fortress kitchens",
-        description=".",
-        NPCS=[cook],
-        items=[]
-    )
-
-    #setup connections
-    island_campfire.add_accessible_locations(island_docks)
-    island_campfire.add_accessible_locations(island_fortress_entrance)
-    island_fortress_entrance.add_accessible_locations(island_docks)
-    island_fortress_entrance.add_accessible_locations(island_fortress_hallway)
-    island_fortress_hallway.add_accessible_locations(island_fortress_kitchens)
-    island_fortress_hallway.add_accessible_locations(island_fortress_dungeons)
-
-    return {
-        "campfire": island_campfire,
-        "docks": island_docks,
-        "fortress_entrance": island_fortress_entrance,
-        "fortress_hallway": island_fortress_hallway,
-        "fortress_kitchens": island_fortress_kitchens,
-        "fortress_dungeons": island_fortress_dungeons
-    }
-
