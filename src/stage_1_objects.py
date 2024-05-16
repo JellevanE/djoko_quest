@@ -4,7 +4,7 @@ from src.characters import NPC, Player
 from src.locations import Location
 from src.items import Item, UsableItem, Weapon
 from src.utils.utils import fancy_print
-from stage_2 import enter_stage_two_fight, enter_stage_two_gift
+from src.stage_2 import enter_stage_two_fight, enter_stage_two_gift
 from src.stage_2_objects import witch
 from src.utils.llm import generate_text
 

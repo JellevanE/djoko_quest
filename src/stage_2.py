@@ -2,14 +2,15 @@ from __future__ import annotations
 import time
 import os
 from sys import platform
+from playsound import playsound
+
 from src.locations import Location
 from src.characters import Player, NPC
 from src.items import Item
 from src.utils.utils import fancy_print
 from src.player_options import player_options
 from src.stage_2_objects import acne_scarf, bear, sven, francoise, statue, stroopwafels, mural_drawing
-from scenes_text.stage_two_text import entering_stage_two, ascii_boat_trip, reset_stats_and_stuff, stage_two_barrier, enter_the_harbor
-from playsound import playsound
+from src.scenes_text.stage_two_text import entering_stage_two, ascii_boat_trip, reset_stats_and_stuff, stage_two_barrier, enter_the_harbor
 from src.utils.llm import generate_text
 
 def enter_stage_two_fight(player:Player, location=None, npc=None):

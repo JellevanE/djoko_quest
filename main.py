@@ -1,7 +1,7 @@
 import os
 from sys import platform
 from src.utils.create_player import create_player
-from stage_1 import enter_stage_one
+from src.stage_1 import enter_stage_one
 from src.utils.utils import fancy_print
 
 

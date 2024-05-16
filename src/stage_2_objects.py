@@ -1,11 +1,10 @@
 from __future__ import annotations
+from playsound import playsound
 from src.characters import NPC, Player
 from src.locations import Location
 from src.items import Item, UsableItem, Weapon
 from src.utils.utils import fancy_print
-from playsound import playsound
-from scenes_text.stage_two_text import moomin_troll, bear_visual, venus_milo, apothecary_shop_entrance, fuzzy_bear_gossip
-from playsound import playsound
+from src.scenes_text.stage_two_text import moomin_troll, bear_visual, venus_milo, apothecary_shop_entrance, fuzzy_bear_gossip
 from src.utils. llm import generate_text
 
 
