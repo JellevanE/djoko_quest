@@ -6,6 +6,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.memory import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from playsound import playsound
 
 from src.utils.utils import fancy_print
 from src.utils.healthbar import Healthbar
@@ -26,12 +27,13 @@ class Character:
         target.hp -= self.damage
         target.hp = max(target.hp, 0)
         target.health_bar.update()
+        playsound("src/sounds/fight_hit.wav", False)
         fancy_print(f"{self.name} dealt {self.damage} damage to {target.name}")
 
 
 class Player(Character):
     def __init__(self, name:str, starting_location, max_hp=10):
-        super().__init__(name=name, hp=max_hp, damage=2)
+        super().__init__(name=name, hp=max_hp, damage=3)
         self.current_location = starting_location
         self.inventory = []
         self.health_bar = Healthbar(self, color="green")

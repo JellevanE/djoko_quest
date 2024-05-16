@@ -1,5 +1,6 @@
 from src.utils.utils import fancy_print
 from src.characters import Character, Player
+from playsound import playsound
 
 
 class Item:
@@ -23,11 +24,13 @@ class Item:
             if self.can_take == True:
                 return player.add_to_inventory(self)
             else:
+                playsound("src/sounds/error_sound.wav", False)
                 return fancy_print("It doesn't look like you can take this.\n", dim=True)
 
 
     def can_use(self, player:Player, object=None):
         if self not in player.inventory:
+            playsound("src/sounds/error_sound.wav", False)
             return fancy_print(f"{self.name} is not currently in your inventory.", dim=True)
         
         if isinstance(self, Weapon):

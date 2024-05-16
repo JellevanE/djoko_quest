@@ -1,16 +1,18 @@
 from __future__ import annotations
 from src.characters import NPC
 from src.items import Item
+from playsound import playsound
 
 
 class Location:
     """class to access all objects in a location"""
-    def __init__(self, name:str, description:str, NPCS:list[NPC], items:list[Item]) -> None:
+    def __init__(self, name:str, description:str, NPCS:list[NPC], items:list[Item], sound=None) -> None:
         self.name = name
         self.description = description
         self.accessible_locations = []
         self.NPCS = NPCS
-        self.items = items      
+        self.items = items
+        self.sound = sound
         pass
 
     def __str__(self) -> str:
@@ -28,6 +30,10 @@ class Location:
             details += f"\n- {loc.name}"
         return details
     
+    def play_location_sound(self):
+        for item in self.sound:
+            playsound(item, False)
+
     def add_item(self, item: Item):
         if item not in self.items:
             self.items.append(item)

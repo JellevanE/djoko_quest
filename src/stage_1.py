@@ -21,6 +21,9 @@ def enter_stage_one(player:Player):
     fancy_print(opening_wake_up, speed=0.02)
     natural_wine.pick_up(player=player)
 
+    fancy_print("Note for the real Djoko:", color="MAGENTA", bright=True)
+    fancy_print("You succesfully installed and started the game, which means you've earned present #1\n", color="MAGENTA")
+
     #start game loop and place player at campfire
     player_options(player=player, location=locations['campfire'])
 
@@ -75,15 +78,18 @@ def create_island_locations():
         You enter the hallway, its walls made of grey concrete slabs, and the ceiling high and slightly arched.
         It's dimly lit by a few candles scattered along the walls. There is some debris on the floor.
 
-        The dim lighting from a few scattered candles casts eerie shadows along the walls. Debris litters the floor, hinting at the fortress's age.
+        The dim lighting from a few scattered candles casts eerie shadows along the walls.
+        Debris litters the floor, hinting at the fortress's age.
 
         At one end of the hallway is the entrance to the island, while at the other end, the hallway splits into two doorways.
-        Through one, the warm light of a hearthfire shines, accompanied by the tantalizing smell of fried onions, melted butter, and unfamiliar spices, suggesting 
-        a kitchen.
+        Through one, the warm light of a hearthfire shines, accompanied by the tantalizing smell of fried onions,
+        melted butter, and unfamiliar spices, suggesting a kitchen.
+        
         The other doorway lies in darkness, seemingly abandoned.
 """,
         NPCS=[],
-        items=[rusty_key, hallway_portrait]
+        items=[rusty_key, hallway_portrait],
+        sound=["src/sounds/fortress_hallway_sound.wav"]
     )
 
     island_fortress_dungeons = Location(

@@ -31,6 +31,7 @@ wooden_club = Weapon(
 
 def spittle_says_thanks(player:Player, npc:NPC, location=None):
     fancy_print("You hand Spittle the coconut through the bars of her cell. \nHer eyes light up with delight and almost become as large as saucers.\n")
+    playsound("src/sounds/spittle_gets_a_coconut.wav", False)
     fancy_print(f"""Spittle the Goblin: {generate_text(
         system_prompt="You are an illiterate goblin who is absolutetely mad for coconuts.",
         user_prompt="Here's a coconut! Enjoy!")}""", color="Yellow"
@@ -75,6 +76,7 @@ def search_the_sand(player, location:Location):
                 print()
                 if player_input.lower() == "yes": 
                     fancy_print("You start digging a hole... \nAfter what seems like half an hour, you hit something hard. You dig out the edges and find an old treasure chest!")
+                    playsound("src/sounds/use_item_sound.wav", False)
                     print()
                     fancy_print(f"The {old_chest.name} is added to the inspectable items at {location.name}", dim=True)
                     return location.add_item(old_chest)
@@ -151,6 +153,7 @@ def search_palm_tree(player:Player, location:Location):
                 if player_input.lower() == "yes":
                     fancy_print("You try a different approach by using two palmtrees to climb. You slowly shimmy you way up the trees until you can almost reach the coconuts. \nWhen you can almost reach them, you give the tree a good shake and one of the coconuts falls on the ground!")
                     print()
+                    playsound("src/sounds/use_item_sound.wav", False)
                     fancy_print(f"The {coconut.name} is added to the inspectable items at {location.name}", dim=True)
                     return location.add_item(coconut)
             

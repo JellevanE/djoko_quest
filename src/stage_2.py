@@ -73,7 +73,10 @@ def enter_stage_two(player:Player, location=None, npc=None):
 
     fancy_print(stage_two_barrier, color="CYAN")
     print()
-    fancy_print(f"\nWell {player.name}, you made it to the second chapter. \n\nYour game is saved. If you die, you can restart from this checkpoint.", bright=True)
+    fancy_print(f"\nWell {player.name}, you made it to the second chapter. \n\nYour game is saved. If you die, you can restart from this checkpoint.\n", bright=True)
+
+    fancy_print("Note for the real Djoko:", speed=0.05, color="MAGENTA", bright=True)
+    fancy_print("You've made it off the island, good stuff. You've earned present #2\n", speed=0.06, color="MAGENTA")
     
     #set up locations for stage 2
     locations = create_harbour_locations()
@@ -81,21 +84,21 @@ def enter_stage_two(player:Player, location=None, npc=None):
     #print scene two opening and pick up scarf
     playsound("src\sounds\ocean_waves_sound.wav", block=False)
     fancy_print(ascii_boat_trip, speed=0.01, color="BLUE")
-    fancy_print(entering_stage_two, speed=0.01)
+    fancy_print(entering_stage_two, speed=0.03)
 
     acne_scarf.pick_up(player=player)
 
     #reset and improve the players stats
-    fancy_print(reset_stats_and_stuff, speed=0.01)
+    fancy_print(reset_stats_and_stuff, speed=0.02)
     print()
     player.max_hp = 14
     player.hp = player.max_hp
-    player.damage =+2
+    player.damage += 2
     fancy_print(f"Your max heath is now {player.max_hp} and your damage is {player.damage}!", dim=True)
     player.health_bar.update()
     player.health_bar.draw()
     print()
-
+    playsound("src/sounds/sailing_into_the_city.wav", False)
     fancy_print(enter_the_harbor)
     #start game loop and place player at campfire
     player_options(player=player, location=locations['Port of Amsterdam'])
@@ -161,17 +164,23 @@ def create_harbour_locations():
         description="""
         The "Leaky Fawcett" pub looks like a Jan Steen painting brought to life. 
         The low-ceilinged room is filled with the hum of animated conversation and the rich aroma of spiced wine and freshly baked bread. 
-        A roaring fire crackles in the hearth, casting a golden glow over the scene. Patrons crowd around mismatched tables, their faces flushed with drink and merriment. 
-        A group of dwarves engages in a boisterous arm-wrestling match, while nearby, an elf and a human share a secretive conversation, their heads bent close together. Children sit below the tables playing. 
+        A roaring fire crackles in the hearth, casting a golden glow over the scene. 
+        Patrons crowd around mismatched tables, their faces flushed with drink and merriment. 
+        A group of dwarves engages in a boisterous arm-wrestling match, while nearby,
+        an elf and a human share a secretive conversation, their heads bent close together. 
+        Children sit below the tables playing. 
 
         In one corner, a Nordic-looking bard with a braided beard and a fur-lined cloak strums a lyre. 
-        At a table near the fire, a female ranger, her skin sun-kissed and her eyes sharp as a hawk’s, leans back in her chair, her boots propped up on the table.
-        At the bar the strangest sight of all can be seen. A large bear in cap sits on a stool. The bear speaks in a deep, rumbling voice to the bartender. 
+        At a table near the fire, a female ranger, her skin sun-kissed and her eyes sharp as a hawk’s, leans back in her chair.
+        Her boots are propped up on the table.
+        At the bar the strangest sight of all can be seen. A large bear in cap sits on a stool. 
+        The bear speaks in a deep, rumbling voice to the bartender. 
     
         The atmosphere is a perfect blend of camaraderie and chaos, where magic and reality intertwine seamlessly.
         """,
         NPCS=[sven, francoise, bear],
-        items=[]
+        items=[],
+        sound=["src/sounds/tavern_1.wav", "src/sounds/tavern_2.wav"]
     )
 
     alleyway = Location(

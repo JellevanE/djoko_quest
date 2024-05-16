@@ -1,17 +1,32 @@
 from __future__ import annotations
+import os
 from playsound import playsound
+from sys import platform
 from src.characters import NPC, Player
 from src.locations import Location
 from src.items import Item, UsableItem, Weapon
 from src.utils.utils import fancy_print
 from src.scenes_text.stage_two_text import moomin_troll, bear_visual, venus_milo, apothecary_shop_entrance, fuzzy_bear_gossip
 from src.utils. llm import generate_text
+from playsound import playsound
 
 
 ### set special stage functions
-def clear_stage_one():
-    fancy_print("You completed the first stage, which means you can open your first present..")
-    return True\
+def clear_stage_one(player:Player, location=None, npc=None):
+    if platform == "darwin":
+        # OS X
+        os.system('clear')
+    if platform == "win32":
+        # Windows...
+        os.system('cls')
+
+    playsound("src/sounds/clear_world.wav")
+    print()
+    print()
+    fancy_print(f"Well done {player.name}. \nYou have completed the first edition of djoko_quest.\n", color="MAGENTA")
+    fancy_print("For now, there are no more puzzles to conquer. \nThis means you can open your final present.\n\n",color="Magenta", speed=0.06, bright=True)
+    fancy_print("Thank you for playing.", color="MAGENTA")
+    return quit()
     
 def prompt_yes_no(prompt: str) -> str:
     player_input = ""
@@ -84,10 +99,13 @@ statue = Item(
 apothecary = Location(
         name="Selma's Curio's Cabinet",
         description="""
-        Selma's Curio's Cabinet is a mystical little shop. Somehow it seemed completely invisible before, nestled in the back of a cobblestone alley. 
-        The air is thick with the scent of aged parchment and incense. Shelves on the walls are filled with peculiar trinkets and enchanted artifacts.
+        Selma's Curio's Cabinet is a mystical little shop. Somehow it seemed completely invisible before,
+        nestled in the back of a cobblestone alley. 
+        The air is thick with the scent of aged parchment and incense. 
+        Shelves on the walls are filled with peculiar trinkets and enchanted artifacts.
 
-        The owner (you assume the titular ‘Selma’) is an elderly woman with wise, twinkling eyes. She doesn’t speak but only nods at you. 
+        The owner (you assume the titular ‘Selma’) is an elderly woman with wise, twinkling eyes. 
+        She doesn’t speak but only nods at you. 
         You notice her hands are rougher than you expected and she carries an aura of quiet power and ancient knowledge.
 
         Behind her there is a door that emits a stange blue glow along the edges.This may be what you have been looking for.
@@ -219,7 +237,11 @@ def sven_obtain_reward(player: Player, npc: NPC, location: Location = None):
     )}""", color="CYAN")
     print()
 
-    fancy_print("He hands over the sheet music.\n")
+    playsound("src/sounds/Moomins.mp3", False)
+    fancy_print("He hands over the sheet music.\nThen, overjoyed by the rabbit leg he just received, he picks up his lyre and begins to play.")
+    print()
+    fancy_print("Note for the real Djoko:", speed=0.05, color="MAGENTA", bright=True)
+    fancy_print("If you hear this song, it also means you can open present #3\n", speed=0.05, color="MAGENTA")
     
     return player.add_to_inventory(npc.reward)
 

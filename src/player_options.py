@@ -3,6 +3,7 @@ from src.characters import Player, NPC
 from src.items import Item, Weapon, UsableItem
 from src.utils.utils import fancy_print, get_valid_input
 from src.fight import fight_character
+from playsound import playsound
 
 
 def player_options(player:Player, location = Location):
@@ -40,7 +41,7 @@ def player_move_to_location(player:Player, location:Location):
     """default action to move to a new location"""
     accessible_locations = location.accessible_locations
 
-    fancy_print(f"You decide to leave {location.name}.", speed=0.004, dim=True)
+    fancy_print(f"You decide to leave {location.name}.", speed=0.03, dim=True)
     print()
 
     if len(accessible_locations) == 0:
@@ -75,11 +76,14 @@ def player_move_to_location(player:Player, location:Location):
         location = selected_location #update location
 
         fancy_print(f"{player.name} travels to {location.name}.", dim=True)
-        fancy_print(f"{location.description}")
+        if location.sound:
+            location.play_location_sound()
+        fancy_print(f"{location.description}", speed=0.015)
         print()
         return player_options(player=player, location=location)
 
     else:
+        playsound("src/sounds/error_sound.wav", False)
         fancy_print("Invalid number, please enter a number from the list.")
         return player_move_to_location(player=player, location=location)
 
@@ -251,6 +255,7 @@ def player_inspect_object(player:Player, location:Location):
                 return player_options(player=player, location=location)
 
             else:
+                playsound("src/sounds/error_sound.wav", False)
                 fancy_print("Invalid answer, please enter 'yes' or 'no'")
 
     
@@ -327,6 +332,7 @@ def player_use_item(player:Player, location:Location, use:bool, inspect:bool):
             print()
             return inventory_action(player=player,location=location)
     else:
+        playsound("src/sounds/error_sound.wav", False)
         fancy_print("Invalid number, please enter a number from the list.")
         player_use_item(player=player, use=use, inspect=inspect)
 
@@ -373,9 +379,11 @@ def use_item_on(player: Player, location: Location, item: Item):
 
                     if isinstance(result, Item):
                         print()
+                        playsound("src/sounds/use_item_sound.wav", False)
                         result.pick_up(player=player)
                         return player_options(player=player, location=location)
                     else:
+                        playsound("src/sounds/use_item_sound.wav", False)
                         result(player=player, location=location, npc=selected_object)
                         return player_options(player=player, location=location)
 
@@ -385,9 +393,11 @@ def use_item_on(player: Player, location: Location, item: Item):
 
                     if isinstance(result, Item):
                         print()
+                        playsound("src/sounds/use_item_sound.wav", False)
                         result.pick_up(player=player)
                         return player_options(player=player, location=location)  
                     else:
+                        playsound("src/sounds/use_item_sound.wav", False)
                         result(player=player, location=location)
                         return player_options(player=player, location=location)
                     
@@ -396,6 +406,7 @@ def use_item_on(player: Player, location: Location, item: Item):
                 return use_item_on(player=player, location=location, item=item)
 
         else:
+            playsound("src/sounds/error_sound.wav", False)
             fancy_print("Invalid number, please enter a number from the list.\n")
             return use_item_on(player=player, location=location, item=item)
 

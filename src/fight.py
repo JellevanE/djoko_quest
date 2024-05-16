@@ -5,6 +5,7 @@ from src.locations import Location
 from src.utils.utils import fancy_print
 from src.utils.llm import generate_text
 import os
+from playsound import playsound
 
 
 
