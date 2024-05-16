@@ -60,6 +60,7 @@ def enter_stage_two_gift(player:Player, location=None, npc=None):
 
 def enter_stage_two(player:Player, location=None, npc=None):
     """Starts the second of the story"""
+    player.current_stage = 2
     
     #create nice transition to second stage
     time.sleep(2)

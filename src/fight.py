@@ -1,13 +1,16 @@
+import os
+import json
 from src.characters import Player, NPC
 from src.items import Item
 from src.locations import Location
 from src.utils.utils import fancy_print
 from src.utils.llm import generate_text
-import os
+from src.utils.clear_screen import clear_screen
 
-
+SAVE_FILE_PATH = "savefile.json"
 
 def fight_character(player:Player, character:NPC, location:Location):
+    print()
     while player.hp and character.hp != 0:
 
         player.health_bar.draw()
@@ -50,6 +53,12 @@ def game_over(player:Player):
             return quit()
         if answer == "yes":
             print("\n \n") 
-            fancy_print("Restarting game...", speed=0.2, bright=True)
-            os.system('cls')
-            os.system('python main.py')
+            fancy_print("Restarting game...\n", speed=0.2, bright=True)
+            
+            clear_screen()
+
+            #save player data
+            with open(SAVE_FILE_PATH, 'w') as f:
+                json.dump(player.to_dict(), f) 
+            
+            os.system(f'python main.py {player}')

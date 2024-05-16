@@ -6,7 +6,7 @@ class Item:
     def __init__(self, name:str, description:str, usable_on:list, can_take:bool, solve_puzzle=None):
         self.name = name
         self.description = description
-        self.usable_on = usable_on
+        self.usable_on = usable_on #list of objects
         self.solve_puzzle = solve_puzzle
         self.can_take = can_take
         pass
@@ -49,6 +49,26 @@ class Item:
             return fancy_print(self.description)
         else:
             return self.description(player, location)
+
+    def to_dict(self):
+        return {
+            'type': 'Item',
+            'name': self.name,
+            'description': self.description,
+            'usable_on': [obj.name for obj in self.usable_on],
+            'can_take': self.can_take,
+            'solve_puzzle': self.solve_puzzle
+        }
+
+    @classmethod
+    def from_dict(cls, data, object_map=None, solve_puzzle_func_map=None):
+        return cls(
+            name=data['name'],
+            description=data['description'],
+            usable_on=[object_map[name] for name in data['usable_on']] if object_map else [],
+            can_take=data['can_take'],
+            solve_puzzle=data['solve_puzzle']
+        )
     
 
 class Weapon(Item):
@@ -69,6 +89,20 @@ class Weapon(Item):
         else:
             return False
 
+    def to_dict(self):
+        item_dict = super().to_dict()
+        item_dict.update({'type': 'Weapon', 'damage': self.damage})
+        return item_dict
+
+    @classmethod
+    def from_dict(cls, data, object_map=None, solve_puzzle_func_map=None):
+        return cls(
+            name=data['name'],
+            description=data['description'],
+            usable_on=[object_map[name] for name in data['usable_on']] if object_map else [],
+            can_take=data['can_take'],
+            damage=data['damage']
+        )
 
 class UsableItem(Item):
     def __init__(self, name, description, usable_on, solve_puzzle, can_take):
@@ -80,3 +114,18 @@ class UsableItem(Item):
             player.remove_from_inventory(self)
             return self.solve_puzzle(player, object)  # solve_puzzle could be a method or function
         return False
+    
+    def to_dict(self):
+        item_dict = super().to_dict()
+        item_dict.update({'type': 'UsableItem'})
+        return item_dict
+
+    @classmethod
+    def from_dict(cls, data, object_map=None, solve_puzzle_func_map=None):
+        return cls(
+            name=data['name'],
+            description=data['description'],
+            usable_on=[object_map[name] for name in data['usable_on']] if object_map else [],
+            solve_puzzle=solve_puzzle_func_map[data['solve_puzzle']] if solve_puzzle_func_map and data['solve_puzzle'] in solve_puzzle_func_map else data['solve_puzzle'],
+            can_take=data['can_take']
+        )

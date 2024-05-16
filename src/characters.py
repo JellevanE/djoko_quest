@@ -26,13 +26,14 @@ class Character:
         target.hp -= self.damage
         target.hp = max(target.hp, 0)
         target.health_bar.update()
-        fancy_print(f"{self.name} dealt {self.damage} damage to {target.name}")
+        fancy_print(f"{self.name} dealt {self.damage} damage to {target.name}", speed=0.04)
 
 
 class Player(Character):
-    def __init__(self, name:str, starting_location, max_hp=10):
+    def __init__(self, name:str, starting_location, current_stage, max_hp=10):
         super().__init__(name=name, hp=max_hp, damage=2)
         self.current_location = starting_location
+        self.current_stage = current_stage
         self.inventory = []
         self.health_bar = Healthbar(self, color="green")
 
@@ -56,16 +57,27 @@ class Player(Character):
             'hp': self.hp,
             'max_hp': self.max_hp,
             'damage': self.damage,
-            'current_location': self.current_location.name if self.current_location else None,
+            'current_stage': self.current_stage,
             'inventory': [item.to_dict() for item in self.inventory]
         }
 
     @classmethod
-    def from_dict(cls, data, locations_dict):
-        player = cls(name=data['name'], starting_location=locations_dict[data['current_location']], max_hp=data['max_hp'])
+    def from_dict(cls, data, object_map=None, solve_puzzle_func_map=None):
+        player = cls(
+            name=data['name'],
+            starting_location=None,  # Adjust this based on your game logic
+            current_stage=data['current_stage'],
+            max_hp=data['max_hp']
+        )
         player.hp = data['hp']
         player.damage = data['damage']
-        player.inventory = [item.from_dict(item) for item in data['inventory']]
+        # Deserialize inventory items
+        item_classes = {
+            'Item': Item,
+            'Weapon': Weapon,
+            'UsableItem': UsableItem  # Add other item classes as needed
+        }
+        player.inventory = [item_classes[item['type']].from_dict(item, object_map, solve_puzzle_func_map) for item in data['inventory']]
         return player
 
 
@@ -130,6 +142,46 @@ class NPC(Character):
     def inspect(self):
         fancy_print(f"You look at {self.name} more closely...", dim=True)
         return fancy_print(self.description)
+
+    def to_dict(self):
+        return {
+            'type': 'NPC',
+            'name': self.name,
+            'hp': self.hp,
+            'max_hp': self.max_hp,
+            'damage': self.damage,
+            'description': self.description,
+            'system_prompt': self.system_prompt,
+            'start_message': self.start_message,
+            'clear_stage_key': self.clear_stage_key,
+            'text_color': self.text_color,
+            'text_speed': self.text_speed,
+            'reward': self.reward.to_dict() if hasattr(self.reward, 'to_dict') else self.reward,
+            'solve_puzzle': self.solve_puzzle.__name__ if callable(self.solve_puzzle) else self.solve_puzzle,  # For functions, we save by name
+            'self_clear': self.self_clear,
+            'will_fight': self.will_fight
+        }
+
+    @classmethod
+    def from_dict(cls, data, solve_puzzle_func_map=None):
+        npc = cls(
+            name=data['name'],
+            max_hp=data['max_hp'],
+            damage=data['damage'],
+            description=data['description'],
+            system_prompt=data['system_prompt'],
+            start_message=data['start_message'],
+            clear_stage_key=data['clear_stage_key'],
+            text_color=data['text_color'],
+            text_speed=data['text_speed'],
+            reward=data['reward'],  # This needs to be deserialized properly
+            solve_puzzle=solve_puzzle_func_map[data['solve_puzzle']] if solve_puzzle_func_map and data['solve_puzzle'] in solve_puzzle_func_map else data['solve_puzzle'],
+            self_clear=data['self_clear'],
+            will_fight=data['will_fight']
+        )
+        npc.hp = data['hp']
+        return npc
+    
 
 #setting up LLM responses for talk method
 

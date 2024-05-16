@@ -1,28 +1,28 @@
 import json
 from src.characters import Player
-from src.locations import Location
 
-def save_game(player, locations):
-    save_data = {
-        'player': player.to_dict(),
-        'locations': {name: loc.to_dict() for name, loc in locations.items()}
+import json
+
+def save_game(player: Player, filename="savefile.json"):
+    game_data = {
+        "player": player.to_dict(),
+        # Add other global state as necessary
     }
-    with open('savegame.json', 'w') as save_file:
-        json.dump(save_data, save_file, indent=4)
-    print("Game saved successfully.")
+    with open(filename, 'w') as f:
+        json.dump(game_data, f)
 
-def load_game():
-    with open('savegame.json', 'r') as save_file:
-        save_data = json.load(save_file)
+def load_game(filename="savefile.json"):
+    with open(filename, 'r') as f:
+        game_data = json.load(f)
 
-    # Re-create the locations first
-    locations = {name: Location.from_dict(data) for name, data in save_data['locations'].items()}
+    # Create map of existing objects
+    object_map = {}
+    solve_puzzle_func_map = {
+        "solve_puzzle_function_name": some_puzzle_function  # Populate with actual functions
+    }
 
-    # Need to re-establish the accessible locations relationship
-    for name, location in locations.items():
-        location.accessible_locations = [locations[loc_name] for loc_name in save_data['locations'][name]['accessible_locations']]
+    # Deserialize objects and populate map
+    player_data = game_data["player"]
+    player = Player.from_dict(player_data, object_map, solve_puzzle_func_map)
 
-    # Re-create the player
-    player = Player.from_dict(save_data['player'], locations)
-
-    return player, locations
+    return player

@@ -11,7 +11,7 @@ To the west you see several masts on the horizon signifying a harbour.
 """
 
 
-ascii_island = """
+ascii_island = r"""
           ___   ____
         /' --;^/ ,-_\     \ | /
        / / --o\ o-\ \\   --(_)--
