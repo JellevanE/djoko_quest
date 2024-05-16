@@ -16,6 +16,8 @@ def game_loop():
         os.system('cls')
 
     #opening title
+    print()
+    print()
     fancy_print("_________\U0001F9CC____\U0001F9DA____\U0001F9CC____\U0001F9DA____\U0001F9CC____\U0001F9DA____ WELCOME TO DJOKO_QUEST ____\U0001F9DA____\U0001F9CC____\U0001F9DA____\U0001F9CC____\U0001F9DA____\U0001F9CC_________", speed=0.02, color="MAGENTA", bright=True)
     print()
     print()
