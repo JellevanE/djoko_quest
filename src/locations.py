@@ -1,6 +1,5 @@
 from __future__ import annotations
-from typing import TypedDict
-from src.characters import NPC, Character
+from src.characters import NPC
 from src.items import Item
 
 

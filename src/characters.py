@@ -1,7 +1,6 @@
 from __future__ import annotations
 import dotenv
 import pprint
-from colored import fg, cprint
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.memory import ChatMessageHistory
