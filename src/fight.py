@@ -1,3 +1,4 @@
+from sys import platform
 from src.characters import Player, NPC
 from src.items import Item
 from src.locations import Location
@@ -51,5 +52,10 @@ def game_over(player:Player):
         if answer == "yes":
             print("\n \n") 
             fancy_print("Restarting game...", speed=0.2, bright=True)
-            os.system('cls')
+            if platform == "darwin":
+                # OS X
+                os.system('clear')
+            if platform == "win32":
+                # Windows...
+                os.system('cls')
             os.system('python main.py')
