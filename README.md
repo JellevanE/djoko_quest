@@ -1,6 +1,9 @@
 # **🧚🏻‍♀️ djoko_quest v0.1.1**
-Welcome to djoko_quest. This repository was mada as a birthday present for the real life djoko, Josephine.
+Welcome to djoko_quest. This repository was made as a birthday present for the real life djoko, Josephine. 
 Djoko_quest is a text based adventure game that makes use of LLM's. Currently it's setup for OpenAI models, but these can be swapped out with other API's or even local models withe relatively low effort.
+
+**Note for the real Djoko:**
+You can install and play this game to earn the rest of your presents. Congratulations and good luck!
 
 # Quickstart
 
@@ -22,7 +25,7 @@ git clone https://github.com/JellevanE/djoko_quest.git
 4. To access the directory run: `cd djoko_quest` or `dir djoko_quest`
 5. Create a file named `.env`
 6. Place your OpenAI key in this file: `OPENAI_API_KEY = "<ADD YOUR KEY HERE>"`
-9. From this point the commands will differ for MacOS / Windows / Linux
+7. From this point the commands will differ for MacOS / Windows / Linux
 
 ## Windows
 
