@@ -1,16 +1,19 @@
 from __future__ import annotations
+import logging
 import dotenv
 import pprint
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.memory import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
+from langchain_core.runnables import Runnable
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from playsound import playsound
 
 from src.utils.utils import fancy_print
 from src.utils.healthbar import Healthbar
 
+logging.getLogger().setLevel(logging.ERROR)
 
 
 # Defining the character object and it's methods

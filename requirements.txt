@@ -1,3 +1,4 @@
+pyobjc == 10.2
 wheel==0.43.0
 colored==2.2.4
 colorama==0.4.6

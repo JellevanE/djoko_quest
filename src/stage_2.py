@@ -82,7 +82,7 @@ def enter_stage_two(player:Player, location=None, npc=None):
     locations = create_harbour_locations()
 
     #print scene two opening and pick up scarf
-    playsound("src\sounds\ocean_waves_sound.wav", block=False)
+    playsound("src/sounds/ocean_waves_sound.wav", block=False)
     fancy_print(ascii_boat_trip, speed=0.01, color="BLUE")
     fancy_print(entering_stage_two, speed=0.03)
 

@@ -41,7 +41,7 @@ def player_move_to_location(player:Player, location:Location):
     """default action to move to a new location"""
     accessible_locations = location.accessible_locations
 
-    fancy_print(f"You decide to leave {location.name}.", speed=0.03, dim=True)
+    fancy_print(f"You decide to leave {location.name}.", speed=0.02, dim=True)
     print()
 
     if len(accessible_locations) == 0:
@@ -78,7 +78,7 @@ def player_move_to_location(player:Player, location:Location):
         fancy_print(f"{player.name} travels to {location.name}.", dim=True)
         if location.sound:
             location.play_location_sound()
-        fancy_print(f"{location.description}", speed=0.015)
+        fancy_print(f"{location.description}", speed=0.01)
         print()
         return player_options(player=player, location=location)
 
@@ -191,7 +191,7 @@ def interact_with_npc(player:Player, location:Location, npc:NPC):
 
 def inspect_action(player:Player, location:Location):
     """default action to inspect object in a location"""
-    fancy_print("You look around and inspect your surroundings more closely... \n", speed=0.04, dim=True)
+    fancy_print("You look around and inspect your surroundings more closely... \n", speed=0.02, dim=True)
     fancy_print("You spot the following things:")
 
     player_inspect_object(player=player, location=location)
